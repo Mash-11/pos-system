@@ -1,14 +1,52 @@
 const express = require('express');
 const router  = express.Router();
 const db      = require('../config/db');
+const https   = require('https');
+
+// Verify Paystack payment
+function verifyPaystack(reference) {
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'api.paystack.co',
+            port: 443,
+            path: `/transaction/verify/${reference}`,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`
+            }
+        };
+
+        const req = https.request(options, res => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => resolve(JSON.parse(data)));
+        });
+
+        req.on('error', reject);
+        req.end();
+    });
+}
 
 // POST /api/sales — create a new sale
 router.post('/', async (req, res) => {
     const { items, total_amount, payment_method,
-            discount, amount_paid, change_given, user_id } = req.body;
+            discount, amount_paid, change_given,
+            user_id, paystack_reference } = req.body;
 
     if (!items || !items.length) {
         return res.status(400).json({ message: 'No items in sale.' });
+    }
+
+    // Verify Paystack payment for card/mobile
+    if (payment_method !== 'cash' && paystack_reference) {
+        try {
+            const verification = await verifyPaystack(paystack_reference);
+            if (!verification.data || verification.data.status !== 'success') {
+                return res.status(400).json({ message: 'Payment verification failed.' });
+            }
+        } catch (err) {
+            return res.status(400).json({ message: 'Could not verify payment.' });
+        }
     }
 
     const conn = await db.getConnection();
@@ -31,7 +69,8 @@ router.post('/', async (req, res) => {
                 [sale_id, item.product_id, item.quantity, item.price]
             );
             await conn.query(
-                `UPDATE Products SET quantity = quantity - ? WHERE product_id = ?`,
+                `UPDATE Products SET quantity = quantity - ?
+                 WHERE product_id = ?`,
                 [item.quantity, item.product_id]
             );
         }
@@ -55,7 +94,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// GET /api/sales — get all sales
+// GET /api/sales
 router.get('/', async (req, res) => {
     try {
         const [rows] = await db.query(

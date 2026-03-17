@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ronin Chopsticks — POS</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <style>
         .pos-layout {
             display: flex;
@@ -899,8 +900,33 @@ async function processCheckout() {
         document.getElementById('cashModal').classList.add('open');
         return;
     }
+    // Paystack for card and mobile money
+    const handler = PaystackPop.setup({
+        key:    'pk_test_627642f1011318170665417b9124d2c8de04aa1d',
+        email:  'customer@ronin.com',
+        amount: Math.round(total * 100), // Paystack uses pesewas
+        currency: 'GHS',
+        channels: selectedPayment === 'card'
+            ? ['card']
+            : ['mobile_money'],
+        label: 'Ronin Chopsticks POS',
+        metadata: {
+            cashier:    user.username,
+            items_count: cart.length
+        },
+        onClose: function() {
+            console.log('Payment window closed.');
+        },
+        callback: async function(response) {
+            // Payment successful — complete the sale
+            await completeSale(
+                total, total, 0,
+                response.reference
+            );
+        }
+    });
 
-    await completeSale(total, 0, 0);
+    handler.openIframe();
 }
 
 function calcChange() {
@@ -929,12 +955,13 @@ async function confirmCashPayment() {
 
     const change = received - total;
     closeCashModal();
-    await completeSale(total, received, change);
+    await completeSale(total, received, change, null);
 }
 
-async function completeSale(total, amountPaid, change) {
+
+async function completeSale(total, amountPaid, change, paystackRef = null) {
     try {
-        const disc = parseFloat(document.getElementById('discountInput').value) || 0;
+        const disc     = parseFloat(document.getElementById('discountInput').value) || 0;
         const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
 
         const payload = {
@@ -943,12 +970,13 @@ async function completeSale(total, amountPaid, change) {
                 quantity:   i.qty,
                 price:      i.price
             })),
-            total_amount:   total,
-            payment_method: selectedPayment,
-            discount:       disc,
-            amount_paid:    amountPaid,
-            change_given:   change,
-            user_id:        user.user_id
+            total_amount:        total,
+            payment_method:      selectedPayment,
+            discount:            disc,
+            amount_paid:         amountPaid,
+            change_given:        change,
+            user_id:             user.user_id,
+            paystack_reference:  paystackRef
         };
 
         const res  = await fetch(`${API}/sales`, {
@@ -961,7 +989,7 @@ async function completeSale(total, amountPaid, change) {
 
         if (res.ok) {
             showReceipt(data.sale_id, total, subtotal, disc, amountPaid, change);
-            loadProducts(); // refresh stock
+            loadProducts();
         } else {
             alert('Sale failed: ' + data.message);
         }
