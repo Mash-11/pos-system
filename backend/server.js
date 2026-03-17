@@ -26,7 +26,8 @@ app.get('/api/health', (req, res) => {
  app.use('/api/inventory', require('./routes/inventory.routes'));
  app.use('/api/customers', require('./routes/customers.routes'));
  app.use('/api/reports', require('./routes/reports.routes'));
-
+ app.use('/api/users',     require('./routes/users.routes'));
+ app.use('/uploads', express.static('../frontend/uploads'));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on http://localhost:${PORT}`);

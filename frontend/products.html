@@ -18,6 +18,16 @@
         </div>
         <nav class="sidebar-nav">
             <p class="nav-label">Main Menu</p>
+
+            <a href="dashboard.html" class="nav-item">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+             Dashboard
+            </a>
+
+        
             <a href="pos.html" class="nav-item">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -25,6 +35,7 @@
                 </svg>
                 POS Terminal
             </a>
+
             <a href="products.html" class="nav-item active">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -81,6 +92,7 @@
                 </button>
             </div>
         </div>
+
 
         <div class="page-content">
 
@@ -153,6 +165,7 @@
                     <table>
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>#</th>
                                 <th>Product Name</th>
                                 <th>Category</th>
@@ -165,7 +178,7 @@
                         </thead>
                         <tbody id="productsTable">
                             <tr>
-                                <td colspan="8" style="text-align:center;
+                                <td colspan="9" style="text-align:center;
                                     padding:40px; color:#aaa;">
                                     Loading products...
                                 </td>
@@ -217,6 +230,16 @@
                     placeholder="Optional">
             </div>
         </div>
+        <div class="form-group">
+            <label class="form-label">Product Image</label>
+            <input type="file" id="pImage" class="form-control"
+                accept="image/*" onchange="previewImage(this)">
+            <div id="imagePreview" style="margin-top:10px;display:none;">
+                <img id="previewImg" style="width:100%;max-height:160px;
+                    object-fit:contain;border-radius:8px;
+                    border:1px solid #eee;background:#f9f9f9;padding:8px;">
+            </div>
+        </div>
 
         <div class="modal-footer">
             <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
@@ -245,7 +268,6 @@
 </div>
 
 <script>
-// Auth guard
 const token = localStorage.getItem('pos_token');
 const user  = JSON.parse(localStorage.getItem('pos_user') || '{}');
 if (!token) window.location.href = 'index.html';
@@ -260,20 +282,19 @@ const headers = () => ({
     'Authorization': `Bearer ${token}`
 });
 
-let allProducts    = [];
-let editingId      = null;
-let deletingId     = null;
+let allProducts = [];
+let editingId   = null;
+let deletingId  = null;
 
-// Load products
 async function loadProducts() {
     try {
-        const res  = await fetch(`${API}/products`, { headers: headers() });
+        const res   = await fetch(`${API}/products`, { headers: headers() });
         allProducts = await res.json();
         renderTable(allProducts);
         updateStats(allProducts);
     } catch {
         document.getElementById('productsTable').innerHTML =
-            `<tr><td colspan="8" style="text-align:center;
+            `<tr><td colspan="9" style="text-align:center;
                 padding:40px;color:#aaa;">
                 Could not load products.
             </td></tr>`;
@@ -293,7 +314,7 @@ function updateStats(prods) {
 function renderTable(prods) {
     const tbody = document.getElementById('productsTable');
     if (!prods.length) {
-        tbody.innerHTML = `<tr><td colspan="8"
+        tbody.innerHTML = `<tr><td colspan="9"
             style="text-align:center;padding:40px;color:#aaa;">
             No products found. Add your first product!
         </td></tr>`;
@@ -301,6 +322,17 @@ function renderTable(prods) {
     }
     tbody.innerHTML = prods.map(p => `
         <tr>
+            <td>
+                ${p.image
+                    ? `<img src="${p.image}" style="width:52px;height:52px;
+                        object-fit:contain;border-radius:8px;
+                        background:#f9f9f9;padding:3px;
+                        border:1px solid #eee;">`
+                    : `<div style="width:52px;height:52px;background:#f5f5f5;
+                        border-radius:8px;display:flex;align-items:center;
+                        justify-content:center;font-size:22px;">🍱</div>`
+                }
+            </td>
             <td style="color:#aaa;font-size:12px;">${p.product_id}</td>
             <td style="font-weight:600;">${p.product_name}</td>
             <td>${p.category || '<span style="color:#ccc">—</span>'}</td>
@@ -308,9 +340,7 @@ function renderTable(prods) {
                 GHS ${parseFloat(p.price).toFixed(2)}
             </td>
             <td style="font-weight:600;">${p.quantity}</td>
-            <td style="font-size:12px;color:#aaa;">
-                ${p.barcode || '—'}
-            </td>
+            <td style="font-size:12px;color:#aaa;">${p.barcode || '—'}</td>
             <td>
                 ${p.quantity <= 0
                     ? '<span class="badge badge-danger">Out of Stock</span>'
@@ -340,7 +370,6 @@ function searchProducts(q) {
     renderTable(filtered);
 }
 
-// Modal
 function openAddModal() {
     editingId = null;
     document.getElementById('modalTitle').textContent = 'Add Product';
@@ -349,6 +378,8 @@ function openAddModal() {
     document.getElementById('pPrice').value    = '';
     document.getElementById('pQuantity').value = '';
     document.getElementById('pBarcode').value  = '';
+    document.getElementById('pImage').value    = '';
+    document.getElementById('imagePreview').style.display = 'none';
     document.getElementById('modalError').classList.remove('show');
     document.getElementById('productModal').classList.add('open');
 }
@@ -363,7 +394,17 @@ function openEditModal(id) {
     document.getElementById('pPrice').value    = p.price;
     document.getElementById('pQuantity').value = p.quantity;
     document.getElementById('pBarcode').value  = p.barcode || '';
+    document.getElementById('pImage').value    = '';
     document.getElementById('modalError').classList.remove('show');
+
+    // Show existing image preview if available
+    if (p.image) {
+        document.getElementById('previewImg').src = p.image;
+        document.getElementById('imagePreview').style.display = 'block';
+    } else {
+        document.getElementById('imagePreview').style.display = 'none';
+    }
+
     document.getElementById('productModal').classList.add('open');
 }
 
@@ -372,11 +413,12 @@ function closeModal() {
 }
 
 async function saveProduct() {
-    const name     = document.getElementById('pName').value.trim();
-    const category = document.getElementById('pCategory').value.trim();
-    const price    = document.getElementById('pPrice').value;
-    const quantity = document.getElementById('pQuantity').value;
-    const barcode  = document.getElementById('pBarcode').value.trim();
+    const name      = document.getElementById('pName').value.trim();
+    const category  = document.getElementById('pCategory').value.trim();
+    const price     = document.getElementById('pPrice').value;
+    const quantity  = document.getElementById('pQuantity').value;
+    const barcode   = document.getElementById('pBarcode').value.trim();
+    const imageFile = document.getElementById('pImage').files[0];
 
     if (!name || !price) {
         const err = document.getElementById('modalError');
@@ -385,18 +427,22 @@ async function saveProduct() {
         return;
     }
 
-    const payload = { product_name: name, category, price, quantity, barcode };
+    const formData = new FormData();
+    formData.append('product_name', name);
+    formData.append('category',     category);
+    formData.append('price',        price);
+    formData.append('quantity',     quantity);
+    formData.append('barcode',      barcode);
+    if (imageFile) formData.append('image', imageFile);
 
     try {
-        const url = editingId
-            ? `${API}/products/${editingId}`
-            : `${API}/products`;
+        const url    = editingId ? `${API}/products/${editingId}` : `${API}/products`;
         const method = editingId ? 'PUT' : 'POST';
 
         const res = await fetch(url, {
             method,
-            headers: headers(),
-            body: JSON.stringify(payload)
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: formData
         });
 
         if (res.ok) {
@@ -415,6 +461,17 @@ async function saveProduct() {
     }
 }
 
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            document.getElementById('previewImg').src = e.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
 function openDeleteModal(id, name) {
     deletingId = id;
     document.getElementById('deleteProductName').textContent = name;
@@ -428,8 +485,7 @@ function closeDeleteModal() {
 async function confirmDelete() {
     try {
         await fetch(`${API}/products/${deletingId}`, {
-            method: 'DELETE',
-            headers: headers()
+            method: 'DELETE', headers: headers()
         });
         closeDeleteModal();
         loadProducts();

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronin Chopsticks — User Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="images/logo-circle.png" alt="Logo">
+            <span>Ronin<br>Chopsticks</span>
+        </div>
+        <nav class="sidebar-nav">
+            <p class="nav-label">Main Menu</p>
+            <a href="dashboard.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                Dashboard
+            </a>
+            <a href="pos.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1-4H8m4 0v4m0-4a1 1 0 110 2 1 1 0 010-2z"/>
+                </svg>
+                POS Terminal
+            </a>
+            <a href="products.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+                </svg>
+                Products
+            </a>
+            <a href="inventory.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Inventory
+            </a>
+            <a href="customers.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Customers
+            </a>
+            <a href="reports.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Reports
+            </a>
+            <p class="nav-label">Admin</p>
+            <a href="users.html" class="nav-item active">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+                User Management
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Admin</div>
+                    <div class="user-role" id="userRole">admin</div>
+                </div>
+                <button class="btn-logout" onclick="logout()" title="Logout">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main">
+        <div class="topbar">
+            <span class="topbar-title">User Management</span>
+            <div class="topbar-right">
+                <button class="btn btn-primary" onclick="openAddModal()">
+                    + Add User
+                </button>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalAdmins">0</div>
+                        <div class="stat-label">Admins</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalManagers">0</div>
+                        <div class="stat-label">Managers</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalCashiers">0</div>
+                        <div class="stat-label">Cashiers</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">All Users</span>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <tr>
+                                <td colspan="5" style="text-align:center;
+                                    padding:40px;color:#aaa;">
+                                    Loading users...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add User Modal -->
+<div class="modal-overlay" id="userModal">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="modal-title" id="modalTitle">Add User</span>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+        <div class="alert alert-error" id="modalError"></div>
+        <div class="form-group">
+            <label class="form-label">Username *</label>
+            <input type="text" id="uUsername" class="form-control"
+                placeholder="e.g. john_cashier">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Password *</label>
+            <input type="password" id="uPassword" class="form-control"
+                placeholder="Minimum 6 characters">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Role *</label>
+            <select id="uRole" class="form-control">
+                <option value="cashier">Cashier</option>
+                <option value="manager">Manager</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveUser()">Save User</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width:380px;">
+        <div class="modal-header">
+            <span class="modal-title">Delete User</span>
+            <button class="modal-close" onclick="closeDeleteModal()">×</button>
+        </div>
+        <p style="font-size:13.5px;color:#555;margin-bottom:20px;">
+            Are you sure you want to delete
+            <strong id="deleteUserName"></strong>?
+        </p>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const token = localStorage.getItem('pos_token');
+const user  = JSON.parse(localStorage.getItem('pos_user') || '{}');
+if (!token) window.location.href = 'index.html';
+if (user.role !== 'admin') window.location.href = 'dashboard.html';
+
+document.getElementById('userAvatar').textContent = (user.username||'A')[0].toUpperCase();
+document.getElementById('userName').textContent   = user.username || 'User';
+document.getElementById('userRole').textContent   = user.role || 'admin';
+
+const API     = 'http://localhost:3000/api';
+const headers = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+});
+
+let allUsers   = [];
+let deletingId = null;
+
+async function loadUsers() {
+    try {
+        const res = await fetch(`${API}/users`, { headers: headers() });
+        allUsers  = await res.json();
+        renderTable(allUsers);
+        updateStats(allUsers);
+    } catch {
+        document.getElementById('usersTable').innerHTML =
+            `<tr><td colspan="5" style="text-align:center;
+                padding:40px;color:#aaa;">
+                Could not load users.
+            </td></tr>`;
+    }
+}
+
+function updateStats(users) {
+    document.getElementById('totalUsers').textContent    = users.length;
+    document.getElementById('totalAdmins').textContent   = users.filter(u => u.role === 'admin').length;
+    document.getElementById('totalManagers').textContent = users.filter(u => u.role === 'manager').length;
+    document.getElementById('totalCashiers').textContent = users.filter(u => u.role === 'cashier').length;
+}
+
+function renderTable(users) {
+    const tbody = document.getElementById('usersTable');
+    if (!users.length) {
+        tbody.innerHTML = `<tr><td colspan="5"
+            style="text-align:center;padding:40px;color:#aaa;">
+            No users found.
+        </td></tr>`;
+        return;
+    }
+    tbody.innerHTML = users.map(u => `
+        <tr>
+            <td style="color:#aaa;font-size:12px;">${u.user_id}</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="user-avatar" style="width:32px;height:32px;font-size:12px;">
+                        ${u.username[0].toUpperCase()}
+                    </div>
+                    <span style="font-weight:600;">${u.username}</span>
+                </div>
+            </td>
+            <td>
+                <span class="badge ${
+                    u.role === 'admin'   ? 'badge-danger' :
+                    u.role === 'manager' ? 'badge-info'   :
+                    'badge-success'}">
+                    ${u.role.toUpperCase()}
+                </span>
+            </td>
+            <td style="font-size:12px;color:#aaa;">
+                ${new Date(u.created_at).toLocaleDateString()}
+            </td>
+            <td>
+                ${u.user_id !== user.user_id ? `
+                <button class="btn btn-danger btn-sm"
+                    onclick="openDeleteModal(${u.user_id}, '${u.username}')">
+                    Delete
+                </button>` : '<span style="color:#ccc;font-size:12px;">Current user</span>'}
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openAddModal() {
+    document.getElementById('modalTitle').textContent = 'Add User';
+    document.getElementById('uUsername').value = '';
+    document.getElementById('uPassword').value = '';
+    document.getElementById('uRole').value     = 'cashier';
+    document.getElementById('modalError').classList.remove('show');
+    document.getElementById('userModal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('userModal').classList.remove('open');
+}
+
+async function saveUser() {
+    const username = document.getElementById('uUsername').value.trim();
+    const password = document.getElementById('uPassword').value.trim();
+    const role     = document.getElementById('uRole').value;
+
+    if (!username || !password) {
+        const err = document.getElementById('modalError');
+        err.textContent = 'Username and password are required.';
+        err.classList.add('show');
+        return;
+    }
+
+    if (password.length < 6) {
+        const err = document.getElementById('modalError');
+        err.textContent = 'Password must be at least 6 characters.';
+        err.classList.add('show');
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API}/users`, {
+            method:  'POST',
+            headers: headers(),
+            body:    JSON.stringify({ username, password, role })
+        });
+
+        if (res.ok) {
+            closeModal();
+            loadUsers();
+        } else {
+            const data = await res.json();
+            const err  = document.getElementById('modalError');
+            err.textContent = data.message || 'Failed to add user.';
+            err.classList.add('show');
+        }
+    } catch {
+        const err = document.getElementById('modalError');
+        err.textContent = 'Server error.';
+        err.classList.add('show');
+    }
+}
+
+function openDeleteModal(id, name) {
+    deletingId = id;
+    document.getElementById('deleteUserName').textContent = name;
+    document.getElementById('deleteModal').classList.add('open');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.remove('open');
+}
+
+async function confirmDelete() {
+    try {
+        await fetch(`${API}/users/${deletingId}`, {
+            method: 'DELETE', headers: headers()
+        });
+        closeDeleteModal();
+        loadUsers();
+    } catch {
+        alert('Could not delete user.');
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = 'index.html';
+}
+
+loadUsers();
+</script>
+
+</body>
+</html>

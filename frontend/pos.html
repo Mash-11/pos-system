@@ -767,14 +767,22 @@ function renderProducts(prods) {
         return;
     }
     grid.innerHTML = prods.map(p => `
-        <div class="product-card ${p.quantity <= 0 ? 'out-of-stock' : ''}"
-            onclick="${p.quantity > 0 ? `addToCart(${p.product_id})` : ''}">
-            <span class="product-emoji">🍱</span>
-            <div class="product-name">${p.product_name}</div>
-            <div class="product-price">GHS ${parseFloat(p.price).toFixed(2)}</div>
-            <div class="product-stock">${p.quantity > 0 ? `${p.quantity} in stock` : 'Out of stock'}</div>
+    <div class="product-card ${p.quantity <= 0 ? 'out-of-stock' : ''}"
+        onclick="${p.quantity > 0 ? `addToCart(${p.product_id})` : ''}">
+        ${p.image
+            ? `<img src="${p.image}" style="width:100%;height:100px;
+                object-fit:contain;border-radius:8px;margin-bottom:8px;
+                background:#f9f9f9;padding:4px;">`
+            : `<span class="product-emoji">🍱</span>`
+        }
+        <div class="product-name">${p.product_name}</div>
+        <div class="product-price">GHS ${parseFloat(p.price).toFixed(2)}</div>
+        <div class="product-stock">${p.quantity > 0
+            ? `${p.quantity} in stock`
+            : 'Out of stock'}
         </div>
-    `).join('');
+    </div>
+`).join('');
 }
 
 function filterByCategory(cat, el) {
@@ -900,26 +908,30 @@ async function processCheckout() {
         document.getElementById('cashModal').classList.add('open');
         return;
     }
-    // Paystack for card and mobile money
+
+    if (typeof PaystackPop === 'undefined') {
+        alert('Paystack failed to load. Check your internet connection.');
+        return;
+    }
+
     const handler = PaystackPop.setup({
-        key:    'pk_test_627642f1011318170665417b9124d2c8de04aa1d',
-        email:  'customer@ronin.com',
-        amount: Math.round(total * 100), // Paystack uses pesewas
+        key:      'pk_test_627642f1011318170665417b9124d2c8de04aa1d',
+        email:    'customer@ronin.com',
+        amount:   Math.round(total * 100),
         currency: 'GHS',
         channels: selectedPayment === 'card'
             ? ['card']
             : ['mobile_money'],
-        label: 'Ronin Chopsticks POS',
+        label:    'Ronin Chopsticks POS',
         metadata: {
-            cashier:    user.username,
+            cashier:     user.username,
             items_count: cart.length
         },
         onClose: function() {
             console.log('Payment window closed.');
         },
-        callback: async function(response) {
-            // Payment successful — complete the sale
-            await completeSale(
+        callback:  function(response) {
+            completeSale(
                 total, total, 0,
                 response.reference
             );
