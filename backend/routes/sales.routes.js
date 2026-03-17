@@ -107,5 +107,32 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: 'Server error.' });
     }
 });
+// GET /api/sales/:id — get single sale with items
+router.get('/:id', async (req, res) => {
+    try {
+        const [[sale]] = await db.query(
+            `SELECT s.*, u.username FROM Sales s
+             LEFT JOIN Users u ON s.user_id = u.user_id
+             WHERE s.sale_id = ?`,
+            [req.params.id]
+        );
+
+        if (!sale) {
+            return res.status(404).json({ message: 'Sale not found.' });
+        }
+
+        const [items] = await db.query(
+            `SELECT si.*, p.product_name FROM Sales_Items si
+             LEFT JOIN Products p ON si.product_id = p.product_id
+             WHERE si.sale_id = ?`,
+            [req.params.id]
+        );
+
+        res.json({ sale, items });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error.' });
+    }
+});
 
 module.exports = router;

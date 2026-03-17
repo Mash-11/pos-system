@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronin Chopsticks — Settings</title>
+     <!--For apple device-->
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+     <meta name="theme-color" content="#ff0000">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="images/logo-circle.png" alt="Logo">
+            <span>Ronin<br>Chopsticks</span>
+        </div>
+        <nav class="sidebar-nav">
+            <p class="nav-label">Main Menu</p>
+            <a href="dashboard.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                Dashboard
+            </a>
+            <a href="pos.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1-4H8m4 0v4m0-4a1 1 0 110 2 1 1 0 010-2z"/>
+                </svg>
+                POS Terminal
+            </a>
+            <a href="products.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+                </svg>
+                Products
+            </a>
+            <a href="inventory.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Inventory
+            </a>
+            <a href="customers.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Customers
+            </a>
+            <a href="reports.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Reports
+            </a>
+            <p class="nav-label">Account</p>
+            <a href="settings.html" class="nav-item active">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Admin</div>
+                    <div class="user-role" id="userRole">admin</div>
+                </div>
+                <button class="btn-logout" onclick="logout()" title="Logout">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main">
+        <div class="topbar">
+            <span class="topbar-title">Account Settings</span>
+        </div>
+
+        <div class="page-content">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+                <!-- Profile Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Profile Information</span>
+                    </div>
+
+                    <!-- Avatar -->
+                    <div style="display:flex;flex-direction:column;
+                        align-items:center;margin-bottom:24px;">
+                        <div id="profileAvatar" style="width:80px;height:80px;
+                            border-radius:50%;background:#ff0000;
+                            display:flex;align-items:center;justify-content:center;
+                            font-size:32px;font-weight:700;color:white;
+                            margin-bottom:12px;">A</div>
+                        <div style="font-size:16px;font-weight:700;"
+                            id="profileName">Admin</div>
+                        <div id="profileRoleBadge" style="margin-top:6px;"></div>
+                    </div>
+
+                    <div style="border-top:1px solid #f0f0f0;padding-top:16px;">
+                        <div style="display:flex;justify-content:space-between;
+                            padding:10px 0;border-bottom:1px solid #f5f5f5;">
+                            <span style="font-size:13px;color:#888;">Username</span>
+                            <span style="font-size:13px;font-weight:600;"
+                                id="profileUsername">—</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;
+                            padding:10px 0;border-bottom:1px solid #f5f5f5;">
+                            <span style="font-size:13px;color:#888;">Role</span>
+                            <span style="font-size:13px;font-weight:600;"
+                                id="profileRole">—</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;
+                            padding:10px 0;">
+                            <span style="font-size:13px;color:#888;">Access Level</span>
+                            <span style="font-size:13px;font-weight:600;"
+                                id="profileAccess">—</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:20px;padding:14px;background:#fff0f0;
+                        border-radius:10px;border:1px solid #ffd5d5;">
+                        <p style="font-size:12px;color:#888;line-height:1.6;margin:0;">
+                            🔐 Your account is secured with bcrypt password hashing.
+                            All sessions expire after 8 hours automatically.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Change Password Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Change Password</span>
+                    </div>
+
+                    <div class="alert alert-error" id="passError"></div>
+                    <div class="alert alert-success" id="passSuccess"></div>
+
+                    <div class="form-group">
+                        <label class="form-label">Current Password *</label>
+                        <div style="position:relative;">
+                            <input type="password" id="currentPass"
+                                class="form-control"
+                                placeholder="Enter current password">
+                            <span onclick="togglePass('currentPass', this)"
+                                style="position:absolute;right:12px;top:50%;
+                                transform:translateY(-50%);cursor:pointer;
+                                font-size:16px;color:#aaa;">👁</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">New Password *</label>
+                        <div style="position:relative;">
+                            <input type="password" id="newPass"
+                                class="form-control"
+                                placeholder="Minimum 6 characters">
+                            <span onclick="togglePass('newPass', this)"
+                                style="position:absolute;right:12px;top:50%;
+                                transform:translateY(-50%);cursor:pointer;
+                                font-size:16px;color:#aaa;">👁</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Confirm New Password *</label>
+                        <div style="position:relative;">
+                            <input type="password" id="confirmPass"
+                                class="form-control"
+                                placeholder="Repeat new password">
+                            <span onclick="togglePass('confirmPass', this)"
+                                style="position:absolute;right:12px;top:50%;
+                                transform:translateY(-50%);cursor:pointer;
+                                font-size:16px;color:#aaa;">👁</span>
+                        </div>
+                    </div>
+
+                    <!-- Password strength -->
+                    <div style="margin-bottom:16px;">
+                        <div style="display:flex;justify-content:space-between;
+                            margin-bottom:6px;">
+                            <span style="font-size:12px;color:#888;">
+                                Password strength
+                            </span>
+                            <span style="font-size:12px;font-weight:600;"
+                                id="strengthLabel">—</span>
+                        </div>
+                        <div style="height:4px;background:#f0f0f0;border-radius:4px;">
+                            <div id="strengthBar" style="height:4px;border-radius:4px;
+                                width:0%;transition:all 0.3s;"></div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-full"
+                        onclick="changePassword()">
+                        Update Password
+                    </button>
+
+                    <div style="margin-top:20px;padding:14px;background:#f9f9f9;
+                        border-radius:10px;">
+                        <p style="font-size:12px;color:#888;margin:0;line-height:1.7;">
+                            <strong>Password requirements:</strong><br>
+                            ✓ Minimum 6 characters<br>
+                            ✓ Mix of letters and numbers recommended<br>
+                            ✓ Avoid using your username as password
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Session Info -->
+            <div class="card" style="margin-top:20px;">
+                <div class="card-header">
+                    <span class="card-title">Session Information</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+                    <div style="padding:16px;background:#f9f9f9;
+                        border-radius:10px;text-align:center;">
+                        <div style="font-size:22px;margin-bottom:6px;">🖥️</div>
+                        <div style="font-size:12px;color:#888;">Browser</div>
+                        <div style="font-size:13px;font-weight:600;margin-top:4px;"
+                            id="browserInfo">—</div>
+                    </div>
+                    <div style="padding:16px;background:#f9f9f9;
+                        border-radius:10px;text-align:center;">
+                        <div style="font-size:22px;margin-bottom:6px;">🕐</div>
+                        <div style="font-size:12px;color:#888;">Session Started</div>
+                        <div style="font-size:13px;font-weight:600;margin-top:4px;"
+                            id="sessionTime">—</div>
+                    </div>
+                    <div style="padding:16px;background:#f9f9f9;
+                        border-radius:10px;text-align:center;">
+                        <div style="font-size:22px;margin-bottom:6px;">🔐</div>
+                        <div style="font-size:12px;color:#888;">Token Status</div>
+                        <div style="font-size:13px;font-weight:600;
+                            color:#27ae60;margin-top:4px;">Active</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+const token = localStorage.getItem('pos_token');
+const user  = JSON.parse(localStorage.getItem('pos_user') || '{}');
+if (!token) window.location.href = 'index.html';
+
+const API     = 'http://localhost:3000/api';
+const headers = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+});
+
+// Set user info
+document.getElementById('userAvatar').textContent    = (user.username||'A')[0].toUpperCase();
+document.getElementById('userName').textContent      = user.username || 'User';
+document.getElementById('userRole').textContent      = user.role || 'staff';
+document.getElementById('profileAvatar').textContent = (user.username||'A')[0].toUpperCase();
+document.getElementById('profileName').textContent   = user.username || 'User';
+document.getElementById('profileUsername').textContent = user.username || '—';
+document.getElementById('profileRole').textContent   = user.role || '—';
+
+const accessLevels = {
+    admin:   'Full system access',
+    manager: 'Products, inventory, reports',
+    cashier: 'POS terminal only'
+};
+document.getElementById('profileAccess').textContent =
+    accessLevels[user.role] || '—';
+
+const roleColors = {
+    admin:   '#ff0000',
+    manager: '#2980b9',
+    cashier: '#27ae60'
+};
+document.getElementById('profileRoleBadge').innerHTML = `
+    <span style="background:${roleColors[user.role]}20;
+        color:${roleColors[user.role]};
+        padding:4px 14px;border-radius:20px;
+        font-size:12px;font-weight:700;">
+        ${(user.role||'').toUpperCase()}
+    </span>`;
+
+// Session info
+document.getElementById('browserInfo').textContent =
+    navigator.userAgent.includes('Chrome') ? 'Chrome' :
+    navigator.userAgent.includes('Firefox') ? 'Firefox' :
+    navigator.userAgent.includes('Safari') ? 'Safari' : 'Browser';
+
+document.getElementById('sessionTime').textContent =
+    new Date().toLocaleTimeString();
+
+// Password strength checker
+document.getElementById('newPass').addEventListener('input', function() {
+    const val  = this.value;
+    const bar  = document.getElementById('strengthBar');
+    const label = document.getElementById('strengthLabel');
+
+    if (!val) {
+        bar.style.width = '0%';
+        label.textContent = '—';
+        return;
+    }
+
+    let strength = 0;
+    if (val.length >= 6)  strength++;
+    if (val.length >= 10) strength++;
+    if (/[A-Z]/.test(val)) strength++;
+    if (/[0-9]/.test(val)) strength++;
+    if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+    const levels = [
+        { label: 'Very weak', color: '#e74c3c', width: '20%' },
+        { label: 'Weak',      color: '#e67e22', width: '40%' },
+        { label: 'Fair',      color: '#f39c12', width: '60%' },
+        { label: 'Strong',    color: '#27ae60', width: '80%' },
+        { label: 'Very strong', color: '#1abc9c', width: '100%' },
+    ];
+
+    const level = levels[Math.min(strength - 1, 4)];
+    bar.style.width       = level.width;
+    bar.style.background  = level.color;
+    label.textContent     = level.label;
+    label.style.color     = level.color;
+});
+
+// Toggle password visibility
+function togglePass(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type    = 'text';
+        icon.textContent = '🙈';
+    } else {
+        input.type    = 'password';
+        icon.textContent = '👁';
+    }
+}
+
+// Change password
+async function changePassword() {
+    const current = document.getElementById('currentPass').value.trim();
+    const newPass  = document.getElementById('newPass').value.trim();
+    const confirm  = document.getElementById('confirmPass').value.trim();
+
+    const errEl  = document.getElementById('passError');
+    const succEl = document.getElementById('passSuccess');
+
+    errEl.classList.remove('show');
+    succEl.classList.remove('show');
+
+    if (!current || !newPass || !confirm) {
+        errEl.textContent = 'All fields are required.';
+        errEl.classList.add('show');
+        return;
+    }
+
+    if (newPass.length < 6) {
+        errEl.textContent = 'New password must be at least 6 characters.';
+        errEl.classList.add('show');
+        return;
+    }
+
+    if (newPass !== confirm) {
+        errEl.textContent = 'New passwords do not match.';
+        errEl.classList.add('show');
+        return;
+    }
+
+    if (newPass === current) {
+        errEl.textContent = 'New password must be different from current password.';
+        errEl.classList.add('show');
+        return;
+    }
+
+    try {
+        const res  = await fetch(`${API}/users/change-password`, {
+            method:  'POST',
+            headers: headers(),
+            body:    JSON.stringify({
+                user_id:      user.user_id,
+                current_password: current,
+                new_password: newPass
+            })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            succEl.textContent = '✅ Password changed successfully!';
+            succEl.classList.add('show');
+            document.getElementById('currentPass').value = '';
+            document.getElementById('newPass').value     = '';
+            document.getElementById('confirmPass').value = '';
+            document.getElementById('strengthBar').style.width = '0%';
+            document.getElementById('strengthLabel').textContent = '—';
+        } else {
+            errEl.textContent = data.message || 'Failed to change password.';
+            errEl.classList.add('show');
+        }
+    } catch {
+        errEl.textContent = 'Server error. Please try again.';
+        errEl.classList.add('show');
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>

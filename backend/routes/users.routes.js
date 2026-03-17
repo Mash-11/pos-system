@@ -45,5 +45,42 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ message: 'Server error.' });
     }
 });
+// POST change password — any logged in user
+router.post('/change-password', async (req, res) => {
+    const { user_id, current_password, new_password } = req.body;
+
+    if (!user_id || !current_password || !new_password) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    try {
+        const [rows] = await db.query(
+            'SELECT * FROM Users WHERE user_id = ?', [user_id]
+        );
+
+        if (!rows.length) {
+            return res.status(404).json({ message: 'User not found.' });
+        }
+
+        const user  = rows[0];
+        const match = await bcrypt.compare(current_password, user.password_hash);
+
+        if (!match) {
+            return res.status(401).json({ message: 'Current password is incorrect.' });
+        }
+
+        const newHash = await bcrypt.hash(new_password, 10);
+        await db.query(
+            'UPDATE Users SET password_hash = ? WHERE user_id = ?',
+            [newHash, user_id]
+        );
+
+        res.json({ message: 'Password changed successfully.' });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error.' });
+    }
+});
 
 module.exports = router;
