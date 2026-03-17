@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronin Chopsticks — Products</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="images/logo-circle.png" alt="Logo">
+            <span>Ronin<br>Chopsticks</span>
+        </div>
+        <nav class="sidebar-nav">
+            <p class="nav-label">Main Menu</p>
+            <a href="pos.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1-4H8m4 0v4m0-4a1 1 0 110 2 1 1 0 010-2z"/>
+                </svg>
+                POS Terminal
+            </a>
+            <a href="products.html" class="nav-item active">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+                </svg>
+                Products
+            </a>
+            <a href="inventory.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Inventory
+            </a>
+            <a href="customers.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Customers
+            </a>
+            <a href="reports.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Reports
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Admin</div>
+                    <div class="user-role" id="userRole">admin</div>
+                </div>
+                <button class="btn-logout" onclick="logout()" title="Logout">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+        <div class="topbar">
+            <span class="topbar-title">Product Management</span>
+            <div class="topbar-right">
+                <button class="btn btn-primary" onclick="openAddModal()">
+                    + Add Product
+                </button>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalProducts">0</div>
+                        <div class="stat-label">Total Products</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="inStock">0</div>
+                        <div class="stat-label">In Stock</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="lowStock">0</div>
+                        <div class="stat-label">Low Stock</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 7h.01M7 3h5l6 6v5M7 3a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V9"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="categories">0</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">All Products</span>
+                    <div class="search-bar">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search products..."
+                            oninput="searchProducts(this.value)">
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Barcode</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTable">
+                            <tr>
+                                <td colspan="8" style="text-align:center;
+                                    padding:40px; color:#aaa;">
+                                    Loading products...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" id="productModal">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="modal-title" id="modalTitle">Add Product</span>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+
+        <div class="alert alert-error" id="modalError"></div>
+
+        <div class="form-group">
+            <label class="form-label">Product Name *</label>
+            <input type="text" id="pName" class="form-control"
+                placeholder="e.g. Chicken Ramen">
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="form-group">
+                <label class="form-label">Category</label>
+                <input type="text" id="pCategory" class="form-control"
+                    placeholder="e.g. Noodles">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Price (GHS) *</label>
+                <input type="number" id="pPrice" class="form-control"
+                    placeholder="0.00" min="0" step="0.01">
+            </div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div class="form-group">
+                <label class="form-label">Stock Quantity</label>
+                <input type="number" id="pQuantity" class="form-control"
+                    placeholder="0" min="0">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Barcode</label>
+                <input type="text" id="pBarcode" class="form-control"
+                    placeholder="Optional">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width:380px;">
+        <div class="modal-header">
+            <span class="modal-title">Delete Product</span>
+            <button class="modal-close" onclick="closeDeleteModal()">×</button>
+        </div>
+        <p style="font-size:13.5px; color:#555; margin-bottom:20px;">
+            Are you sure you want to delete
+            <strong id="deleteProductName"></strong>?
+            This cannot be undone.
+        </p>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auth guard
+const token = localStorage.getItem('pos_token');
+const user  = JSON.parse(localStorage.getItem('pos_user') || '{}');
+if (!token) window.location.href = 'index.html';
+
+document.getElementById('userAvatar').textContent = (user.username||'A')[0].toUpperCase();
+document.getElementById('userName').textContent   = user.username || 'User';
+document.getElementById('userRole').textContent   = user.role || 'staff';
+
+const API     = 'http://localhost:3000/api';
+const headers = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+});
+
+let allProducts    = [];
+let editingId      = null;
+let deletingId     = null;
+
+// Load products
+async function loadProducts() {
+    try {
+        const res  = await fetch(`${API}/products`, { headers: headers() });
+        allProducts = await res.json();
+        renderTable(allProducts);
+        updateStats(allProducts);
+    } catch {
+        document.getElementById('productsTable').innerHTML =
+            `<tr><td colspan="8" style="text-align:center;
+                padding:40px;color:#aaa;">
+                Could not load products.
+            </td></tr>`;
+    }
+}
+
+function updateStats(prods) {
+    document.getElementById('totalProducts').textContent = prods.length;
+    document.getElementById('inStock').textContent =
+        prods.filter(p => p.quantity > 5).length;
+    document.getElementById('lowStock').textContent =
+        prods.filter(p => p.quantity <= 5 && p.quantity > 0).length;
+    document.getElementById('categories').textContent =
+        new Set(prods.map(p => p.category).filter(Boolean)).size;
+}
+
+function renderTable(prods) {
+    const tbody = document.getElementById('productsTable');
+    if (!prods.length) {
+        tbody.innerHTML = `<tr><td colspan="8"
+            style="text-align:center;padding:40px;color:#aaa;">
+            No products found. Add your first product!
+        </td></tr>`;
+        return;
+    }
+    tbody.innerHTML = prods.map(p => `
+        <tr>
+            <td style="color:#aaa;font-size:12px;">${p.product_id}</td>
+            <td style="font-weight:600;">${p.product_name}</td>
+            <td>${p.category || '<span style="color:#ccc">—</span>'}</td>
+            <td style="font-weight:600;color:#ff0000;">
+                GHS ${parseFloat(p.price).toFixed(2)}
+            </td>
+            <td style="font-weight:600;">${p.quantity}</td>
+            <td style="font-size:12px;color:#aaa;">
+                ${p.barcode || '—'}
+            </td>
+            <td>
+                ${p.quantity <= 0
+                    ? '<span class="badge badge-danger">Out of Stock</span>'
+                    : p.quantity <= 5
+                    ? '<span class="badge badge-warning">Low Stock</span>'
+                    : '<span class="badge badge-success">In Stock</span>'
+                }
+            </td>
+            <td>
+                <div style="display:flex;gap:6px;">
+                    <button class="btn btn-ghost btn-sm"
+                        onclick="openEditModal(${p.product_id})">Edit</button>
+                    <button class="btn btn-danger btn-sm"
+                        onclick="openDeleteModal(${p.product_id},
+                        '${p.product_name}')">Delete</button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function searchProducts(q) {
+    const filtered = allProducts.filter(p =>
+        p.product_name.toLowerCase().includes(q.toLowerCase()) ||
+        (p.category && p.category.toLowerCase().includes(q.toLowerCase()))
+    );
+    renderTable(filtered);
+}
+
+// Modal
+function openAddModal() {
+    editingId = null;
+    document.getElementById('modalTitle').textContent = 'Add Product';
+    document.getElementById('pName').value     = '';
+    document.getElementById('pCategory').value = '';
+    document.getElementById('pPrice').value    = '';
+    document.getElementById('pQuantity').value = '';
+    document.getElementById('pBarcode').value  = '';
+    document.getElementById('modalError').classList.remove('show');
+    document.getElementById('productModal').classList.add('open');
+}
+
+function openEditModal(id) {
+    const p = allProducts.find(p => p.product_id === id);
+    if (!p) return;
+    editingId = id;
+    document.getElementById('modalTitle').textContent = 'Edit Product';
+    document.getElementById('pName').value     = p.product_name;
+    document.getElementById('pCategory').value = p.category || '';
+    document.getElementById('pPrice').value    = p.price;
+    document.getElementById('pQuantity').value = p.quantity;
+    document.getElementById('pBarcode').value  = p.barcode || '';
+    document.getElementById('modalError').classList.remove('show');
+    document.getElementById('productModal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('productModal').classList.remove('open');
+}
+
+async function saveProduct() {
+    const name     = document.getElementById('pName').value.trim();
+    const category = document.getElementById('pCategory').value.trim();
+    const price    = document.getElementById('pPrice').value;
+    const quantity = document.getElementById('pQuantity').value;
+    const barcode  = document.getElementById('pBarcode').value.trim();
+
+    if (!name || !price) {
+        const err = document.getElementById('modalError');
+        err.textContent = 'Product name and price are required.';
+        err.classList.add('show');
+        return;
+    }
+
+    const payload = { product_name: name, category, price, quantity, barcode };
+
+    try {
+        const url = editingId
+            ? `${API}/products/${editingId}`
+            : `${API}/products`;
+        const method = editingId ? 'PUT' : 'POST';
+
+        const res = await fetch(url, {
+            method,
+            headers: headers(),
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            closeModal();
+            loadProducts();
+        } else {
+            const data = await res.json();
+            const err  = document.getElementById('modalError');
+            err.textContent = data.message || 'Failed to save product.';
+            err.classList.add('show');
+        }
+    } catch {
+        const err = document.getElementById('modalError');
+        err.textContent = 'Server error. Please try again.';
+        err.classList.add('show');
+    }
+}
+
+function openDeleteModal(id, name) {
+    deletingId = id;
+    document.getElementById('deleteProductName').textContent = name;
+    document.getElementById('deleteModal').classList.add('open');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.remove('open');
+}
+
+async function confirmDelete() {
+    try {
+        await fetch(`${API}/products/${deletingId}`, {
+            method: 'DELETE',
+            headers: headers()
+        });
+        closeDeleteModal();
+        loadProducts();
+    } catch {
+        alert('Could not delete product.');
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = 'index.html';
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>

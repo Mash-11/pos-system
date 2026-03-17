@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronin Chopsticks — Customers</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="images/logo-circle.png" alt="Logo">
+            <span>Ronin<br>Chopsticks</span>
+        </div>
+        <nav class="sidebar-nav">
+            <p class="nav-label">Main Menu</p>
+            <a href="pos.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 7H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1-4H8m4 0v4m0-4a1 1 0 110 2 1 1 0 010-2z"/>
+                </svg>
+                POS Terminal
+            </a>
+            <a href="products.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+                </svg>
+                Products
+            </a>
+            <a href="inventory.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Inventory
+            </a>
+            <a href="customers.html" class="nav-item active">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Customers
+            </a>
+            <a href="reports.html" class="nav-item">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Reports
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">Admin</div>
+                    <div class="user-role" id="userRole">admin</div>
+                </div>
+                <button class="btn-logout" onclick="logout()" title="Logout">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+        <div class="topbar">
+            <span class="topbar-title">Customer Management</span>
+            <div class="topbar-right">
+                <button class="btn btn-primary" onclick="openAddModal()">
+                    + Add Customer
+                </button>
+            </div>
+        </div>
+
+        <div class="page-content">
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalCustomers">0</div>
+                        <div class="stat-label">Total Customers</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalPoints">0</div>
+                        <div class="stat-label">Total Loyalty Points</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="topCustomer">—</div>
+                        <div class="stat-label">Top Customer</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">All Customers</span>
+                    <div class="search-bar">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search customers..."
+                            oninput="searchCustomers(this.value)">
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Loyalty Points</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersTable">
+                            <tr>
+                                <td colspan="7" style="text-align:center;
+                                    padding:40px;color:#aaa;">
+                                    Loading customers...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" id="customerModal">
+    <div class="modal">
+        <div class="modal-header">
+            <span class="modal-title" id="modalTitle">Add Customer</span>
+            <button class="modal-close" onclick="closeModal()">×</button>
+        </div>
+
+        <div class="alert alert-error" id="modalError"></div>
+
+        <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="cName" class="form-control"
+                placeholder="e.g. John Mensah">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="text" id="cPhone" class="form-control"
+                    placeholder="e.g. 0241234567">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" id="cEmail" class="form-control"
+                    placeholder="e.g. john@email.com">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Address</label>
+            <input type="text" id="cAddress" class="form-control"
+                placeholder="e.g. Kumasi, Ashanti">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Loyalty Points</label>
+            <input type="number" id="cPoints" class="form-control"
+                placeholder="0" min="0" value="0">
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveCustomer()">
+                Save Customer
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width:380px;">
+        <div class="modal-header">
+            <span class="modal-title">Delete Customer</span>
+            <button class="modal-close" onclick="closeDeleteModal()">×</button>
+        </div>
+        <p style="font-size:13.5px;color:#555;margin-bottom:20px;">
+            Are you sure you want to delete
+            <strong id="deleteCustomerName"></strong>?
+            This cannot be undone.
+        </p>
+        <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+            <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const token = localStorage.getItem('pos_token');
+const user  = JSON.parse(localStorage.getItem('pos_user') || '{}');
+if (!token) window.location.href = 'index.html';
+
+document.getElementById('userAvatar').textContent = (user.username||'A')[0].toUpperCase();
+document.getElementById('userName').textContent   = user.username || 'User';
+document.getElementById('userRole').textContent   = user.role || 'staff';
+
+const API     = 'http://localhost:3000/api';
+const headers = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+});
+
+let allCustomers = [];
+let editingId    = null;
+let deletingId   = null;
+
+async function loadCustomers() {
+    try {
+        const res    = await fetch(`${API}/customers`, { headers: headers() });
+        allCustomers = await res.json();
+        renderTable(allCustomers);
+        updateStats(allCustomers);
+    } catch {
+        document.getElementById('customersTable').innerHTML =
+            `<tr><td colspan="7" style="text-align:center;
+                padding:40px;color:#aaa;">
+                Could not load customers.
+            </td></tr>`;
+    }
+}
+
+function updateStats(customers) {
+    document.getElementById('totalCustomers').textContent = customers.length;
+    document.getElementById('totalPoints').textContent =
+        customers.reduce((s, c) => s + (c.loyalty_points || 0), 0);
+    const top = customers.sort((a,b) =>
+        (b.loyalty_points||0) - (a.loyalty_points||0))[0];
+    document.getElementById('topCustomer').textContent =
+        top ? top.name.split(' ')[0] : '—';
+}
+
+function renderTable(customers) {
+    const tbody = document.getElementById('customersTable');
+    if (!customers.length) {
+        tbody.innerHTML = `<tr><td colspan="7"
+            style="text-align:center;padding:40px;color:#aaa;">
+            No customers yet. Add your first customer!
+        </td></tr>`;
+        return;
+    }
+    tbody.innerHTML = customers.map(c => `
+        <tr>
+            <td style="color:#aaa;font-size:12px;">${c.customer_id}</td>
+            <td>
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <div class="user-avatar" style="width:32px;height:32px;
+                        font-size:12px;flex-shrink:0;">
+                        ${c.name[0].toUpperCase()}
+                    </div>
+                    <span style="font-weight:600;">${c.name}</span>
+                </div>
+            </td>
+            <td>${c.phone || '—'}</td>
+            <td style="color:#2980b9;">${c.email || '—'}</td>
+            <td style="color:#888;">${c.address || '—'}</td>
+            <td>
+                <span style="background:#fff0f0;color:#ff0000;
+                    padding:3px 10px;border-radius:20px;
+                    font-size:12px;font-weight:700;">
+                    ${c.loyalty_points || 0} pts
+                </span>
+            </td>
+            <td>
+                <div style="display:flex;gap:6px;">
+                    <button class="btn btn-ghost btn-sm"
+                        onclick="openEditModal(${c.customer_id})">Edit</button>
+                    <button class="btn btn-danger btn-sm"
+                        onclick="openDeleteModal(${c.customer_id},
+                        '${c.name}')">Delete</button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function searchCustomers(q) {
+    const filtered = allCustomers.filter(c =>
+        c.name.toLowerCase().includes(q.toLowerCase()) ||
+        (c.phone && c.phone.includes(q)) ||
+        (c.email && c.email.toLowerCase().includes(q.toLowerCase()))
+    );
+    renderTable(filtered);
+}
+
+function openAddModal() {
+    editingId = null;
+    document.getElementById('modalTitle').textContent = 'Add Customer';
+    document.getElementById('cName').value    = '';
+    document.getElementById('cPhone').value   = '';
+    document.getElementById('cEmail').value   = '';
+    document.getElementById('cAddress').value = '';
+    document.getElementById('cPoints').value  = '0';
+    document.getElementById('modalError').classList.remove('show');
+    document.getElementById('customerModal').classList.add('open');
+}
+
+function openEditModal(id) {
+    const c = allCustomers.find(c => c.customer_id === id);
+    if (!c) return;
+    editingId = id;
+    document.getElementById('modalTitle').textContent = 'Edit Customer';
+    document.getElementById('cName').value    = c.name;
+    document.getElementById('cPhone').value   = c.phone || '';
+    document.getElementById('cEmail').value   = c.email || '';
+    document.getElementById('cAddress').value = c.address || '';
+    document.getElementById('cPoints').value  = c.loyalty_points || 0;
+    document.getElementById('modalError').classList.remove('show');
+    document.getElementById('customerModal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('customerModal').classList.remove('open');
+}
+
+async function saveCustomer() {
+    const name    = document.getElementById('cName').value.trim();
+    const phone   = document.getElementById('cPhone').value.trim();
+    const email   = document.getElementById('cEmail').value.trim();
+    const address = document.getElementById('cAddress').value.trim();
+    const points  = document.getElementById('cPoints').value;
+
+    if (!name) {
+        const err = document.getElementById('modalError');
+        err.textContent = 'Customer name is required.';
+        err.classList.add('show');
+        return;
+    }
+
+    const payload = { name, phone, email, address, loyalty_points: points };
+
+    try {
+        const url    = editingId ? `${API}/customers/${editingId}` : `${API}/customers`;
+        const method = editingId ? 'PUT' : 'POST';
+        const res    = await fetch(url, {
+            method, headers: headers(),
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            closeModal();
+            loadCustomers();
+        } else {
+            const data = await res.json();
+            const err  = document.getElementById('modalError');
+            err.textContent = data.message || 'Failed to save.';
+            err.classList.add('show');
+        }
+    } catch {
+        const err = document.getElementById('modalError');
+        err.textContent = 'Server error.';
+        err.classList.add('show');
+    }
+}
+
+function openDeleteModal(id, name) {
+    deletingId = id;
+    document.getElementById('deleteCustomerName').textContent = name;
+    document.getElementById('deleteModal').classList.add('open');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.remove('open');
+}
+
+async function confirmDelete() {
+    try {
+        await fetch(`${API}/customers/${deletingId}`, {
+            method: 'DELETE', headers: headers()
+        });
+        closeDeleteModal();
+        loadCustomers();
+    } catch {
+        alert('Could not delete customer.');
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = 'index.html';
+}
+
+loadCustomers();
+</script>
+
+</body>
+</html>

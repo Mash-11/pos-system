@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ronin Chopsticks — POS</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .pos-layout {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ── Left: Product Panel ── */
+        .pos-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--off-white);
+            overflow: hidden;
+        }
+
+        .pos-topbar {
+            background: var(--white);
+            padding: 14px 20px;
+            border-bottom: 1px solid #ebebeb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .pos-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pos-logo img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .pos-logo span {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .pos-search {
+            flex: 1;
+            max-width: 360px;
+            position: relative;
+        }
+
+        .pos-search svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: #aaa;
+        }
+
+        .pos-search input {
+            width: 100%;
+            padding: 9px 14px 9px 38px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: var(--radius);
+            font-size: 13.5px;
+            outline: none;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .pos-search input:focus { border-color: var(--primary); }
+
+        .pos-user {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-dark);
+        }
+
+        .pos-user .user-avatar {
+            width: 30px;
+            height: 30px;
+            font-size: 11px;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--white);
+            border-bottom: 1px solid #ebebeb;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .categories::-webkit-scrollbar { display: none; }
+
+        .cat-btn {
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1.5px solid #e0e0e0;
+            background: white;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .cat-btn:hover,
+        .cat-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+            align-content: start;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 1.5px solid #ebebeb;
+            border-radius: var(--radius-lg);
+            padding: 16px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(255,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .product-card.out-of-stock {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .product-emoji {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .product-name {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .product-price {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-stock {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* ── Right: Cart Panel ── */
+        .pos-right {
+            width: 360px;
+            background: var(--white);
+            border-left: 1px solid #ebebeb;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .cart-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #ebebeb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cart-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .cart-count {
+            background: var(--primary);
+            color: white;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 20px;
+        }
+
+        .cart-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--gray);
+            gap: 8px;
+        }
+
+        .cart-empty svg {
+            width: 48px;
+            height: 48px;
+            opacity: 0.3;
+        }
+
+        .cart-empty p { font-size: 13px; }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .cart-item:last-child { border-bottom: none; }
+
+        .cart-item-info { flex: 1; min-width: 0; }
+
+        .cart-item-name {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cart-item-price {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .qty-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            border: 1.5px solid #e0e0e0;
+            background: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            color: var(--dark);
+        }
+
+        .qty-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .qty-num {
+            font-size: 13px;
+            font-weight: 700;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .cart-item-total {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--black);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .btn-remove {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 2px;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .btn-remove:hover { color: var(--primary); }
+
+        /* Cart Footer */
+        .cart-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #ebebeb;
+        }
+
+        .cart-totals { margin-bottom: 14px; }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            font-size: 13px;
+            color: var(--gray-dark);
+        }
+
+        .total-row.grand {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--black);
+            border-top: 1.5px solid #ebebeb;
+            margin-top: 8px;
+            padding-top: 10px;
+        }
+
+        .total-row.grand span:last-child { color: var(--primary); }
+
+        .discount-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .discount-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: var(--radius);
+            font-size: 13px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .discount-row input:focus { border-color: var(--primary); }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .pay-btn {
+            padding: 8px 4px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: var(--radius);
+            background: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            font-family: inherit;
+            color: var(--dark);
+        }
+
+        .pay-btn:hover,
+        .pay-btn.active {
+            border-color: var(--primary);
+            background: #fff0f0;
+            color: var(--primary);
+        }
+
+        .btn-checkout {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-checkout:hover { background: #cc0000; }
+        .btn-checkout:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* Nav sidebar for other pages */
+        .pos-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--black);
+            border-radius: 40px;
+            padding: 8px 16px;
+            display: flex;
+            gap: 4px;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .pos-nav a {
+            padding: 8px 14px;
+            border-radius: 30px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .pos-nav a:hover,
+        .pos-nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Receipt Modal */
+        .receipt-modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.2s ease;
+        }
+
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .receipt-header img {
+            width: 50px;
+            margin-bottom: 8px;
+        }
+
+        .receipt-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .receipt-header p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .receipt-items { margin-bottom: 16px; }
+
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            padding: 4px 0;
+            color: var(--dark);
+        }
+
+        .receipt-totals {
+            border-top: 1px dashed #ddd;
+            padding-top: 12px;
+            margin-bottom: 16px;
+        }
+
+        .receipt-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12.5px;
+            padding: 3px 0;
+        }
+
+        .receipt-total-row.grand {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .receipt-footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--gray);
+            border-top: 1px dashed #ddd;
+            padding-top: 12px;
+        }
+
+        .receipt-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="pos-layout">
+
+    <!-- ── LEFT: Products ── -->
+    <div class="pos-left">
+
+        <!-- Top Bar -->
+        <div class="pos-topbar">
+            <div class="pos-logo">
+                <img src="images/logo-circle.png" alt="Logo">
+                <span>Ronin Chopsticks</span>
+            </div>
+
+            <div class="pos-search">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search products or scan barcode..."
+                    oninput="filterProducts()">
+            </div>
+
+            <div class="pos-user">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <span id="userName">Admin</span>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="categories" id="categories">
+            <button class="cat-btn active" onclick="filterByCategory('all', this)">All</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+            <div style="grid-column:1/-1; text-align:center; padding:40px; color:#aaa;">
+                Loading products...
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── RIGHT: Cart ── -->
+    <div class="pos-right">
+
+        <div class="cart-header">
+            <span class="cart-title">Current Order</span>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <p>No items added yet</p>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+
+            <!-- Discount -->
+            <div class="discount-row">
+                <input type="number" id="discountInput" placeholder="Discount (%)"
+                    min="0" max="100" oninput="updateTotals()">
+                <button class="btn btn-ghost btn-sm" onclick="clearDiscount()">Clear</button>
+            </div>
+
+            <!-- Totals -->
+            <div class="cart-totals">
+                <div class="total-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">GHS 0.00</span>
+                </div>
+                <div class="total-row">
+                    <span>Discount</span>
+                    <span id="discountAmt">- GHS 0.00</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax (0%)</span>
+                    <span id="taxAmt">GHS 0.00</span>
+                </div>
+                <div class="total-row grand">
+                    <span>Total</span>
+                    <span id="grandTotal">GHS 0.00</span>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="payment-methods">
+                <button class="pay-btn active" id="pay-cash"
+                    onclick="selectPayment('cash')">💵 Cash</button>
+                <button class="pay-btn" id="pay-mobile"
+                    onclick="selectPayment('mobile')">📱 Mobile</button>
+                <button class="pay-btn" id="pay-card"
+                    onclick="selectPayment('card')">💳 Card</button>
+            </div>
+
+            <!-- Checkout -->
+            <button class="btn-checkout" id="checkoutBtn"
+                onclick="processCheckout()">
+                Charge GHS 0.00
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="pos-nav">
+    <a href="pos.html" class="active">🧾 POS</a>
+    <a href="products.html">📦 Products</a>
+    <a href="inventory.html">📊 Inventory</a>
+    <a href="customers.html">👥 Customers</a>
+    <a href="reports.html">📈 Reports</a>
+</nav>
+
+<!-- Receipt Modal -->
+<div class="modal-overlay" id="receiptModal">
+    <div class="receipt-modal">
+        <div class="receipt-header">
+            <img src="images/logo-circle.png" alt="Logo">
+            <h3>Ronin Chopsticks</h3>
+            <p id="receiptDate"></p>
+            <p id="receiptId"></p>
+        </div>
+        <div class="receipt-items" id="receiptItems"></div>
+        <div class="receipt-totals">
+            <div class="receipt-total-row">
+                <span>Subtotal</span><span id="rSubtotal"></span>
+            </div>
+            <div class="receipt-total-row">
+                <span>Discount</span><span id="rDiscount"></span>
+            </div>
+            <div class="receipt-total-row grand">
+                <span>TOTAL</span><span id="rTotal"></span>
+            </div>
+            <div class="receipt-total-row">
+                <span>Payment</span><span id="rMethod"></span>
+            </div>
+            <div class="receipt-total-row">
+                <span>Cash Given</span><span id="rCash"></span>
+            </div>
+            <div class="receipt-total-row grand">
+                <span>Change</span><span id="rChange"></span>
+            </div>
+        </div>
+        <div class="receipt-footer">
+            Thank you for dining with us!<br>
+            Ronin Chopsticks — Where every meal is a masterpiece
+        </div>
+        <div class="receipt-actions">
+            <button class="btn btn-ghost w-100" onclick="printReceipt()">🖨 Print</button>
+            <button class="btn btn-primary w-100" onclick="newSale()">New Sale</button>
+        </div>
+    </div>
+</div>
+
+<!-- Cash Input Modal -->
+<div class="modal-overlay" id="cashModal">
+    <div class="modal" style="max-width:340px;">
+        <div class="modal-header">
+            <span class="modal-title">Cash Payment</span>
+            <button class="modal-close" onclick="closeCashModal()">×</button>
+        </div>
+        <p style="font-size:13px; color:#888; margin-bottom:16px;">
+            Total amount due: <strong id="cashDue" style="color:#ff0000;"></strong>
+        </p>
+        <div class="form-group">
+            <label class="form-label">Amount Received (GHS)</label>
+            <input type="number" id="cashReceived" class="form-control"
+                placeholder="0.00" oninput="calcChange()">
+        </div>
+        <div style="display:flex; justify-content:space-between;
+            font-size:14px; font-weight:700; margin-bottom:20px;">
+            <span>Change:</span>
+            <span id="changeDisplay" style="color:#ff0000;">GHS 0.00</span>
+        </div>
+        <button class="btn btn-primary btn-full" onclick="confirmCashPayment()">
+            Confirm Payment
+        </button>
+    </div>
+</div>
+
+<script>
+// ── Auth Guard ──
+const token = localStorage.getItem('pos_token');
+const user  = JSON.parse(localStorage.getItem('pos_user') || '{}');
+if (!token) window.location.href = 'index.html';
+
+// Set user info
+document.getElementById('userAvatar').textContent =
+    (user.username || 'A')[0].toUpperCase();
+document.getElementById('userName').textContent =
+    user.username || 'User';
+
+// ── State ──
+let products       = [];
+let cart           = [];
+let selectedPayment = 'cash';
+let currentSaleId  = null;
+
+const API = 'http://localhost:3000/api';
+const headers = () => ({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+});
+
+// ── Load Products ──
+async function loadProducts() {
+    try {
+        const res  = await fetch(`${API}/products`, { headers: headers() });
+        const data = await res.json();
+        products   = data;
+        renderProducts(products);
+        renderCategories(products);
+    } catch {
+        document.getElementById('productsGrid').innerHTML =
+            `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#aaa;">
+                Could not load products. Is the server running?
+            </div>`;
+    }
+}
+
+function renderCategories(prods) {
+    const cats = ['All', ...new Set(prods.map(p => p.category).filter(Boolean))];
+    const container = document.getElementById('categories');
+    container.innerHTML = cats.map((c, i) =>
+        `<button class="cat-btn ${i===0?'active':''}"
+            onclick="filterByCategory('${c}', this)">
+            ${c}
+        </button>`
+    ).join('');
+}
+
+function renderProducts(prods) {
+    const grid = document.getElementById('productsGrid');
+    if (!prods.length) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;
+            padding:40px;color:#aaa;">No products found.</div>`;
+        return;
+    }
+    grid.innerHTML = prods.map(p => `
+        <div class="product-card ${p.quantity <= 0 ? 'out-of-stock' : ''}"
+            onclick="${p.quantity > 0 ? `addToCart(${p.product_id})` : ''}">
+            <span class="product-emoji">🍱</span>
+            <div class="product-name">${p.product_name}</div>
+            <div class="product-price">GHS ${parseFloat(p.price).toFixed(2)}</div>
+            <div class="product-stock">${p.quantity > 0 ? `${p.quantity} in stock` : 'Out of stock'}</div>
+        </div>
+    `).join('');
+}
+
+function filterByCategory(cat, el) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    const filtered = cat === 'All' || cat === 'all'
+        ? products
+        : products.filter(p => p.category === cat);
+    renderProducts(filtered);
+}
+
+function filterProducts() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    const filtered = products.filter(p =>
+        p.product_name.toLowerCase().includes(q) ||
+        (p.barcode && p.barcode.includes(q))
+    );
+    renderProducts(filtered);
+}
+
+// ── Cart Logic ──
+function addToCart(productId) {
+    const product = products.find(p => p.product_id === productId);
+    if (!product) return;
+
+    const existing = cart.find(i => i.product_id === productId);
+    if (existing) {
+        if (existing.qty >= product.quantity) return;
+        existing.qty++;
+    } else {
+        cart.push({ ...product, qty: 1 });
+    }
+    renderCart();
+}
+
+function changeQty(productId, delta) {
+    const item = cart.find(i => i.product_id === productId);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart = cart.filter(i => i.product_id !== productId);
+    renderCart();
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(i => i.product_id !== productId);
+    renderCart();
+}
+
+function renderCart() {
+    const container = document.getElementById('cartItems');
+    document.getElementById('cartCount').textContent = cart.length;
+
+    if (!cart.length) {
+        container.innerHTML = `
+            <div class="cart-empty">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                <p>No items added yet</p>
+            </div>`;
+        updateTotals();
+        return;
+    }
+
+    container.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <div class="cart-item-info">
+                <div class="cart-item-name">${item.product_name}</div>
+                <div class="cart-item-price">GHS ${parseFloat(item.price).toFixed(2)} each</div>
+            </div>
+            <div class="qty-control">
+                <button class="qty-btn" onclick="changeQty(${item.product_id}, -1)">−</button>
+                <span class="qty-num">${item.qty}</span>
+                <button class="qty-btn" onclick="changeQty(${item.product_id}, 1)">+</button>
+            </div>
+            <div class="cart-item-total">
+                GHS ${(item.price * item.qty).toFixed(2)}
+            </div>
+            <button class="btn-remove" onclick="removeFromCart(${item.product_id})">×</button>
+        </div>
+    `).join('');
+
+    updateTotals();
+}
+
+function updateTotals() {
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const disc     = parseFloat(document.getElementById('discountInput').value) || 0;
+    const discAmt  = subtotal * (disc / 100);
+    const total    = subtotal - discAmt;
+
+    document.getElementById('subtotal').textContent    = `GHS ${subtotal.toFixed(2)}`;
+    document.getElementById('discountAmt').textContent = `- GHS ${discAmt.toFixed(2)}`;
+    document.getElementById('grandTotal').textContent  = `GHS ${total.toFixed(2)}`;
+    document.getElementById('checkoutBtn').textContent = `Charge GHS ${total.toFixed(2)}`;
+    document.getElementById('checkoutBtn').disabled    = cart.length === 0;
+}
+
+function clearDiscount() {
+    document.getElementById('discountInput').value = '';
+    updateTotals();
+}
+
+function selectPayment(method) {
+    selectedPayment = method;
+    document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`pay-${method}`).classList.add('active');
+}
+
+// ── Checkout ──
+async function processCheckout() {
+    if (!cart.length) return;
+
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const disc     = parseFloat(document.getElementById('discountInput').value) || 0;
+    const total    = subtotal - subtotal * (disc / 100);
+
+    if (selectedPayment === 'cash') {
+        document.getElementById('cashDue').textContent = `GHS ${total.toFixed(2)}`;
+        document.getElementById('cashReceived').value  = '';
+        document.getElementById('changeDisplay').textContent = 'GHS 0.00';
+        document.getElementById('cashModal').classList.add('open');
+        return;
+    }
+
+    await completeSale(total, 0, 0);
+}
+
+function calcChange() {
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const disc     = parseFloat(document.getElementById('discountInput').value) || 0;
+    const total    = subtotal - subtotal * (disc / 100);
+    const received = parseFloat(document.getElementById('cashReceived').value) || 0;
+    const change   = Math.max(0, received - total);
+    document.getElementById('changeDisplay').textContent = `GHS ${change.toFixed(2)}`;
+}
+
+function closeCashModal() {
+    document.getElementById('cashModal').classList.remove('open');
+}
+
+async function confirmCashPayment() {
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const disc     = parseFloat(document.getElementById('discountInput').value) || 0;
+    const total    = subtotal - subtotal * (disc / 100);
+    const received = parseFloat(document.getElementById('cashReceived').value) || 0;
+
+    if (received < total) {
+        alert('Amount received is less than total!');
+        return;
+    }
+
+    const change = received - total;
+    closeCashModal();
+    await completeSale(total, received, change);
+}
+
+async function completeSale(total, amountPaid, change) {
+    try {
+        const disc = parseFloat(document.getElementById('discountInput').value) || 0;
+        const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+        const payload = {
+            items: cart.map(i => ({
+                product_id: i.product_id,
+                quantity:   i.qty,
+                price:      i.price
+            })),
+            total_amount:   total,
+            payment_method: selectedPayment,
+            discount:       disc,
+            amount_paid:    amountPaid,
+            change_given:   change,
+            user_id:        user.user_id
+        };
+
+        const res  = await fetch(`${API}/sales`, {
+            method:  'POST',
+            headers: headers(),
+            body:    JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            showReceipt(data.sale_id, total, subtotal, disc, amountPaid, change);
+            loadProducts(); // refresh stock
+        } else {
+            alert('Sale failed: ' + data.message);
+        }
+
+    } catch (err) {
+        alert('Could not complete sale. Check server connection.');
+    }
+}
+
+function showReceipt(saleId, total, subtotal, disc, amountPaid, change) {
+    const discAmt = subtotal * (disc / 100);
+    const now     = new Date();
+
+    document.getElementById('receiptDate').textContent =
+        now.toLocaleString();
+    document.getElementById('receiptId').textContent =
+        `Receipt #${saleId}`;
+    document.getElementById('receiptItems').innerHTML =
+        cart.map(i => `
+            <div class="receipt-item">
+                <span>${i.product_name} x${i.qty}</span>
+                <span>GHS ${(i.price * i.qty).toFixed(2)}</span>
+            </div>`
+        ).join('');
+
+    document.getElementById('rSubtotal').textContent = `GHS ${subtotal.toFixed(2)}`;
+    document.getElementById('rDiscount').textContent = `- GHS ${discAmt.toFixed(2)}`;
+    document.getElementById('rTotal').textContent    = `GHS ${total.toFixed(2)}`;
+    document.getElementById('rMethod').textContent   = selectedPayment.toUpperCase();
+    document.getElementById('rCash').textContent     = amountPaid ? `GHS ${amountPaid.toFixed(2)}` : '—';
+    document.getElementById('rChange').textContent   = `GHS ${change.toFixed(2)}`;
+
+    document.getElementById('receiptModal').classList.add('open');
+}
+
+function printReceipt() { window.print(); }
+
+function newSale() {
+    cart = [];
+    document.getElementById('discountInput').value = '';
+    document.getElementById('receiptModal').classList.remove('open');
+    renderCart();
+    loadProducts();
+}
+
+// ── Init ──
+loadProducts();
+updateTotals();
+</script>
+
+</body>
+</html>
