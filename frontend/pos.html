@@ -741,7 +741,7 @@ async function loadProducts() {
     try {
         const res  = await fetch(`${API}/products`, { headers: headers() });
         const data = await res.json();
-        products   = data;
+        products   = data.filter(p => !p.product_name.startsWith('[ARCHIVED]'));
         renderProducts(products);
         renderCategories(products);
     } catch {

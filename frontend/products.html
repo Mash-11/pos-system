@@ -493,17 +493,26 @@ function closeDeleteModal() {
     document.getElementById('deleteModal').classList.remove('open');
 }
 
+
+
 async function confirmDelete() {
     try {
-        await fetch(`${API}/products/${deletingId}`, {
+        const res  = await fetch(`${API}/products/${deletingId}`, {
             method: 'DELETE', headers: headers()
         });
+        const data = await res.json();
         closeDeleteModal();
+
+        if (data.archived) {
+            alert('⚠️ This product has sales history so it was archived instead of deleted. It will be hidden from the POS screen.');
+        }
+
         loadProducts();
     } catch {
         alert('Could not delete product.');
     }
 }
+
 
 function logout() {
     localStorage.clear();

@@ -128,43 +128,71 @@
                         <div class="stat-label">Total Items</div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon orange">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z"/>
-                        </svg>
+    
+                <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalItems">0</div>
+                            <div class="stat-label">Total Items</div>
+                        </div>
                     </div>
-                    <div class="stat-info">
-                        <div class="stat-value" id="lowStockCount">0</div>
-                        <div class="stat-label">Low Stock Items</div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="lowStockCount">0</div>
+                            <div class="stat-label">Low Stock Items</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="outOfStock">0</div>
+                            <div class="stat-label">Out of Stock</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalStock">0</div>
+                            <div class="stat-label">Total Stock Units</div>
+                        </div>
+                    </div>
+                    <!-- NEW — Total Inventory Value -->
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalInventoryValue">GHS 0</div>
+                            <div class="stat-label">Total Inventory Value</div>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon red">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"/>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value" id="outOfStock">0</div>
-                        <div class="stat-label">Out of Stock</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon blue">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-value" id="totalStock">0</div>
-                        <div class="stat-label">Total Stock Units</div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Inventory Table -->
             <div class="card">
@@ -314,13 +342,22 @@ async function loadInventory() {
 }
 
 function updateStats(prods) {
-    document.getElementById('totalItems').textContent  = prods.length;
-    document.getElementById('lowStockCount').textContent =
+    const totalValue = prods.reduce((sum, p) =>
+        sum + (parseFloat(p.price) * parseInt(p.quantity)), 0
+    );
+
+    document.getElementById('totalItems').textContent     = prods.length;
+    document.getElementById('lowStockCount').textContent  =
         prods.filter(p => p.quantity > 0 && p.quantity <= 5).length;
-    document.getElementById('outOfStock').textContent  =
+    document.getElementById('outOfStock').textContent     =
         prods.filter(p => p.quantity <= 0).length;
-    document.getElementById('totalStock').textContent  =
+    document.getElementById('totalStock').textContent     =
         prods.reduce((s, p) => s + p.quantity, 0);
+    document.getElementById('totalInventoryValue').textContent =
+        'GHS ' + totalValue.toLocaleString('en-GH', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
 }
 
 function renderInventory(prods) {

@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
+    limits: { fileSize: 5 * 1024 * 1024 },
     fileFilter: function(req, file, cb) {
         const allowed = /jpeg|jpg|png|gif|webp/;
         const ext     = allowed.test(path.extname(file.originalname).toLowerCase());
@@ -69,11 +69,13 @@ router.put('/:id', upload.single('image'), async (req, res) => {
             const image = `/uploads/${req.file.filename}`;
             query  = `UPDATE Products SET product_name=?, category=?, price=?,
                       quantity=?, barcode=?, image=? WHERE product_id=?`;
-            params = [product_name, category, price, quantity, barcode, image, req.params.id];
+            params = [product_name, category, price, quantity,
+                      barcode || null, image, req.params.id];
         } else {
             query  = `UPDATE Products SET product_name=?, category=?, price=?,
                       quantity=?, barcode=? WHERE product_id=?`;
-            params = [product_name, category, price, quantity, barcode, req.params.id];
+            params = [product_name, category, price, quantity,
+                      barcode || null, req.params.id];
         }
         await db.query(query, params);
         res.json({ message: 'Product updated.' });
@@ -83,11 +85,25 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     }
 });
 
-// DELETE product
+// DELETE product — archive if has sales history
 router.delete('/:id', async (req, res) => {
     try {
-        await db.query('DELETE FROM Products WHERE product_id = ?', [req.params.id]);
-        res.json({ message: 'Product deleted.' });
+        const [salesCheck] = await db.query(
+            'SELECT COUNT(*) as count FROM Sales_Items WHERE product_id = ?',
+            [req.params.id]
+        );
+
+        if (salesCheck[0].count > 0) {
+            await db.query(
+                `UPDATE Products SET product_name = CONCAT('[ARCHIVED] ', product_name),
+                 quantity = 0 WHERE product_id = ? AND product_name NOT LIKE '[ARCHIVED]%'`,
+                [req.params.id]
+            );
+            res.json({ message: 'Product archived.', archived: true });
+        } else {
+            await db.query('DELETE FROM Products WHERE product_id = ?', [req.params.id]);
+            res.json({ message: 'Product deleted successfully.', archived: false });
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Server error.' });
