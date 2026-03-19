@@ -72,6 +72,7 @@
         }
     </style>
 </head>
+<script src="js/theme.js"></script>
 <body>
 
 <div class="layout">
@@ -194,6 +195,14 @@
                     <option value="card">Card</option>
                 </select>
             </div>
+            <button id="themeToggle" onclick="toggleTheme()"
+                style="background:none;border:1.5px solid #e0e0e0;
+                border-radius:8px;padding:7px 10px;cursor:pointer;
+                display:flex;align-items:center;color:var(--gray-dark);
+                transition:all 0.2s;"
+                title="Toggle dark mode">
+            </button>
+
         </div>
 
         <div class="page-content">

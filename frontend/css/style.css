@@ -747,3 +747,209 @@ tbody tr:last-child td { border-bottom: none; }
 
     .card { padding: 12px; }
 }
+
+/* ── Dark Mode ── */
+body.dark {
+    background: #0f0f0f;
+    color: #ffffff;
+}
+
+body.dark .sidebar {
+    background: #0a0a0a;
+    border-right: 1px solid #222;
+}
+
+body.dark .sidebar-logo {
+    border-bottom-color: #222;
+}
+
+body.dark .nav-item {
+    color: #888;
+}
+
+body.dark .nav-item:hover,
+body.dark .nav-item.active {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+body.dark .sidebar-footer {
+    border-top-color: #222;
+}
+
+body.dark .user-name { color: #ffffff; }
+body.dark .user-role { color: #666; }
+
+body.dark .main { background: #0f0f0f; }
+
+body.dark .topbar {
+    background: #1a1a1a;
+    border-bottom-color: #222;
+}
+
+body.dark .topbar-title { color: #ffffff; }
+
+body.dark .card {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+body.dark .card-title { color: #ffffff; }
+
+body.dark .stat-card {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+body.dark .stat-value { color: #ffffff; }
+body.dark .stat-label { color: #666; }
+
+body.dark thead th {
+    background: #111;
+    color: #666;
+    border-bottom-color: #2a2a2a;
+}
+
+body.dark tbody td {
+    color: #cccccc;
+    border-bottom-color: #1e1e1e;
+}
+
+body.dark tbody tr:hover { background: #1e1e1e; }
+
+body.dark .form-control {
+    background: #111;
+    border-color: #333;
+    color: #ffffff;
+}
+
+body.dark .form-control:focus { border-color: #ff0000; }
+body.dark .form-label { color: #aaa; }
+
+body.dark .modal {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+}
+
+body.dark .modal-title { color: #ffffff; }
+body.dark .modal-close { color: #666; }
+
+body.dark .search-bar input {
+    background: #111;
+    border-color: #333;
+    color: #ffffff;
+}
+
+body.dark .btn-ghost {
+    background: #111;
+    border-color: #333;
+    color: #ccc;
+}
+
+body.dark .btn-ghost:hover {
+    background: #222;
+}
+
+body.dark .off-white { background: #0f0f0f; }
+
+body.dark .pos-left { background: #0f0f0f; }
+
+body.dark .pos-topbar {
+    background: #1a1a1a;
+    border-bottom-color: #2a2a2a;
+}
+
+body.dark .pos-right {
+    background: #1a1a1a;
+    border-left-color: #2a2a2a;
+}
+
+body.dark .cart-header {
+    border-bottom-color: #2a2a2a;
+}
+
+body.dark .cart-title { color: #ffffff; }
+
+body.dark .cart-item {
+    border-bottom-color: #2a2a2a;
+}
+
+body.dark .cart-item-name { color: #ffffff; }
+body.dark .cart-item-price { color: #666; }
+body.dark .cart-item-total { color: #ffffff; }
+
+body.dark .product-card {
+    background: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+body.dark .product-card:hover {
+    border-color: #ff0000;
+}
+
+body.dark .product-name { color: #ffffff; }
+body.dark .product-stock { color: #666; }
+
+body.dark .categories {
+    background: #1a1a1a;
+    border-bottom-color: #2a2a2a;
+}
+
+body.dark .cat-btn {
+    background: #111;
+    border-color: #333;
+    color: #888;
+}
+
+body.dark .total-row { color: #888; }
+body.dark .total-row.grand { color: #ffffff; }
+body.dark .total-row.grand span:last-child { color: #ff0000; }
+
+body.dark .cart-footer { border-top-color: #2a2a2a; }
+
+body.dark .pay-btn {
+    background: #111;
+    border-color: #333;
+    color: #888;
+}
+
+body.dark .pay-btn.active {
+    background: #1a0000;
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+body.dark .receipt-modal,
+body.dark .modal-overlay .modal {
+    background: #1a1a1a;
+}
+
+body.dark .receipt-header h3 { color: #ffffff; }
+body.dark .receipt-item { color: #ccc; }
+body.dark .receipt-total-row { color: #ccc; }
+body.dark .receipt-footer { color: #666; }
+
+body.dark .pos-nav { background: #1a1a1a; }
+
+body.dark .discount-row input {
+    background: #111;
+    border-color: #333;
+    color: #ffffff;
+}
+
+body.dark .qty-btn {
+    background: #111;
+    border-color: #333;
+    color: #ccc;
+}
+
+body.dark .modal-footer .btn-ghost {
+    background: #111;
+    border-color: #333;
+    color: #ccc;
+}
+
+body.dark select.form-control option {
+    background: #1a1a1a;
+    color: #ffffff;
+}

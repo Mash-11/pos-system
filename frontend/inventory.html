@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ronin Chopsticks — Inventory</title> <!--For apple device-->
+    <title>Ronin Chopsticks — Inventory</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#ff0000">
     <link rel="stylesheet" href="css/style.css">
 </head>
+<script src="js/theme.js"></script>
 <body>
 
 <div class="layout">
@@ -21,7 +22,6 @@
         </div>
         <nav class="sidebar-nav">
             <p class="nav-label">Main Menu</p>
-
             <a href="dashboard.html" class="nav-item">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -79,21 +79,24 @@
                     <div class="user-name" id="userName">Admin</div>
                     <div class="user-role" id="userRole">admin</div>
                 </div>
-
-                <a href="settings.html" style="color:#888;display:flex;align-items:center;
-                padding:4px;transition:color 0.2s;text-decoration:none;"
-                    title="Settings">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-            </a>
-<button class="btn-logout" onclick="logout()" title="Logout">
+                <a href="settings.html" style="color:#888;display:flex;
+                    align-items:center;padding:4px;transition:color 0.2s;
+                    text-decoration:none;" title="Settings">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </a>
                 <button class="btn-logout" onclick="logout()" title="Logout">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                     </svg>
                 </button>
@@ -110,17 +113,25 @@
                     + Stock Adjustment
                 </button>
             </div>
+            <button id="themeToggle" onclick="toggleTheme()"
+                style="background:none;border:1.5px solid #e0e0e0;
+                border-radius:8px;padding:7px 10px;cursor:pointer;
+                display:flex;align-items:center;color:var(--gray-dark);
+                transition:all 0.2s;"
+                title="Toggle dark mode">
+            </button>
         </div>
 
         <div class="page-content">
 
-            <!-- Stats -->
-            <div class="stats-grid">
+            <!-- All 5 Stats in one row -->
+            <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
                 <div class="stat-card">
                     <div class="stat-icon green">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 13l4 4L19 7"/>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                     </div>
                     <div class="stat-info">
@@ -128,79 +139,71 @@
                         <div class="stat-label">Total Items</div>
                     </div>
                 </div>
-    
-                <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));">
-                    <div class="stat-card">
-                        <div class="stat-icon green">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7"/>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value" id="totalItems">0</div>
-                            <div class="stat-label">Total Items</div>
-                        </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z"/>
+                        </svg>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon orange">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z"/>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value" id="lowStockCount">0</div>
-                            <div class="stat-label">Low Stock Items</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon red">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value" id="outOfStock">0</div>
-                            <div class="stat-label">Out of Stock</div>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon blue">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value" id="totalStock">0</div>
-                            <div class="stat-label">Total Stock Units</div>
-                        </div>
-                    </div>
-                    <!-- NEW — Total Inventory Value -->
-                    <div class="stat-card">
-                        <div class="stat-icon green">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="22" height="22">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <div class="stat-info">
-                            <div class="stat-value" id="totalInventoryValue">GHS 0</div>
-                            <div class="stat-label">Total Inventory Value</div>
-                        </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="lowStockCount">0</div>
+                        <div class="stat-label">Low Stock Items</div>
                     </div>
                 </div>
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="outOfStock">0</div>
+                        <div class="stat-label">Out of Stock</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalStock">0</div>
+                        <div class="stat-label">Total Stock Units</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            width="22" height="22">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value" id="totalValue">GHS 0.00</div>
+                        <div class="stat-label">Inventory Value</div>
+                    </div>
+                </div>
+            </div>
 
-
-            <!-- Inventory Table -->
-            <div class="card">
+            <!-- Stock Levels Table — full width -->
+            <div class="card" style="margin-bottom:20px;">
                 <div class="card-header">
                     <span class="card-title">Stock Levels</span>
                     <div class="search-bar">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                         <input type="text" placeholder="Search products..."
@@ -233,8 +236,8 @@
                 </div>
             </div>
 
-            <!-- Adjustment History -->
-            <div class="card" style="margin-top:20px;">
+            <!-- Adjustment History — full width -->
+            <div class="card">
                 <div class="card-header">
                     <span class="card-title">Adjustment History</span>
                 </div>
@@ -342,19 +345,17 @@ async function loadInventory() {
 }
 
 function updateStats(prods) {
-    const totalValue = prods.reduce((sum, p) =>
-        sum + (parseFloat(p.price) * parseInt(p.quantity)), 0
-    );
-
-    document.getElementById('totalItems').textContent     = prods.length;
-    document.getElementById('lowStockCount').textContent  =
+    document.getElementById('totalItems').textContent    = prods.length;
+    document.getElementById('lowStockCount').textContent =
         prods.filter(p => p.quantity > 0 && p.quantity <= 5).length;
-    document.getElementById('outOfStock').textContent     =
+    document.getElementById('outOfStock').textContent    =
         prods.filter(p => p.quantity <= 0).length;
-    document.getElementById('totalStock').textContent     =
-        prods.reduce((s, p) => s + p.quantity, 0);
-    document.getElementById('totalInventoryValue').textContent =
-        'GHS ' + totalValue.toLocaleString('en-GH', {
+    document.getElementById('totalStock').textContent    =
+        prods.reduce((s, p) => s + parseInt(p.quantity), 0);
+    document.getElementById('totalValue').textContent    =
+        'GHS ' + prods.reduce((s, p) =>
+            s + (parseFloat(p.price) * parseInt(p.quantity)), 0
+        ).toLocaleString('en-GH', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         });
@@ -370,7 +371,7 @@ function renderInventory(prods) {
         return;
     }
     tbody.innerHTML = prods.map(p => {
-        const value = (p.price * p.quantity).toFixed(2);
+        const value = (parseFloat(p.price) * parseInt(p.quantity)).toFixed(2);
         return `
         <tr>
             <td style="color:#aaa;font-size:12px;">${p.product_id}</td>
@@ -416,7 +417,9 @@ function populateProductSelect(prods) {
     const sel = document.getElementById('adjProduct');
     sel.innerHTML = '<option value="">Select a product...</option>' +
         prods.map(p =>
-            `<option value="${p.product_id}">${p.product_name} (Stock: ${p.quantity})</option>`
+            `<option value="${p.product_id}">
+                ${p.product_name} (Stock: ${p.quantity})
+            </option>`
         ).join('');
 }
 
@@ -462,7 +465,7 @@ async function saveAdjustment() {
     }
 
     const product = allProducts.find(p => p.product_id == productId);
-    let newQty = product.quantity;
+    let newQty    = product.quantity;
 
     if (type === 'add')    newQty = product.quantity + qty;
     if (type === 'remove') newQty = Math.max(0, product.quantity - qty);
@@ -471,21 +474,16 @@ async function saveAdjustment() {
     const adjustment = newQty - product.quantity;
 
     try {
-        // Update product quantity
         await fetch(`${API}/products/${productId}`, {
             method:  'PUT',
             headers: headers(),
-            body: JSON.stringify({
-                ...product,
-                quantity: newQty
-            })
+            body:    JSON.stringify({ ...product, quantity: newQty })
         });
 
-        // Log adjustment
         await fetch(`${API}/inventory`, {
             method:  'POST',
             headers: headers(),
-            body: JSON.stringify({
+            body:    JSON.stringify({
                 product_id: productId,
                 adjustment,
                 reason: reason || 'Manual adjustment'
@@ -505,8 +503,8 @@ async function saveAdjustment() {
 
 async function loadHistory() {
     try {
-        const res  = await fetch(`${API}/inventory`, { headers: headers() });
-        const data = await res.json();
+        const res   = await fetch(`${API}/inventory`, { headers: headers() });
+        const data  = await res.json();
         const tbody = document.getElementById('historyTable');
 
         if (!data.length) {

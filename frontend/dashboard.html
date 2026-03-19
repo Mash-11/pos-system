@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ronin Chopsticks — Dashboard</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script> <!--For apple device-->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#ff0000">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -69,7 +70,6 @@
                 </svg>
                 Receipts
             </a>
-            <!-- Admin only -->
             <div id="adminMenu" style="display:none;">
                 <p class="nav-label">Admin</p>
                 <a href="users.html" class="nav-item">
@@ -88,20 +88,24 @@
                     <div class="user-name" id="userName">Admin</div>
                     <div class="user-role" id="userRole">admin</div>
                 </div>
-                <a href="settings.html" style="color:#888;display:flex;align-items:center;
-         padding:4px;transition:color 0.2s;text-decoration:none;"
-    title="Settings">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-            </a>
-<button class="btn-logout" onclick="logout()" title="Logout">
+                <a href="settings.html" style="color:#888;display:flex;
+                    align-items:center;padding:4px;transition:color 0.2s;
+                    text-decoration:none;" title="Settings">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </a>
                 <button class="btn-logout" onclick="logout()" title="Logout">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="18" height="18">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        width="18" height="18">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2"
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                     </svg>
                 </button>
@@ -114,17 +118,22 @@
             <span class="topbar-title" id="welcomeMsg">Welcome back!</span>
             <div class="topbar-right">
                 <span style="font-size:13px;color:#888;" id="todayDate"></span>
+                <button id="themeToggle" onclick="toggleTheme()"
+                    style="background:none;border:1.5px solid #e0e0e0;
+                    border-radius:8px;padding:7px 10px;cursor:pointer;
+                    display:flex;align-items:center;color:var(--gray-dark);
+                    transition:all 0.2s;"
+                    title="Toggle dark mode">
+                </button>
             </div>
         </div>
 
         <div class="page-content">
 
-            <!-- Role Banner -->
             <div id="roleBanner" style="margin-bottom:20px;padding:14px 20px;
                 border-radius:12px;display:flex;align-items:center;gap:12px;">
             </div>
 
-            <!-- Stats -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon green">
@@ -176,7 +185,6 @@
                 </div>
             </div>
 
-            <!-- Quick Actions -->
             <div class="card" style="margin-bottom:20px;">
                 <div class="card-header">
                     <span class="card-title">Quick Actions</span>
@@ -186,7 +194,6 @@
                 </div>
             </div>
 
-            <!-- Charts Row -->
             <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;">
                 <div class="card">
                     <div class="card-header">
@@ -216,8 +223,6 @@
 const token = localStorage.getItem('pos_token');
 const user  = JSON.parse(localStorage.getItem('pos_user') || '{}');
 if (!token) window.location.href = 'index.html';
-
-// Cashier should not be here
 if (user.role === 'cashier') window.location.href = 'pos.html';
 
 const API     = 'http://localhost:3000/api';
@@ -226,7 +231,6 @@ const headers = () => ({
     'Authorization': `Bearer ${token}`
 });
 
-// Set user info
 document.getElementById('userAvatar').textContent = (user.username||'A')[0].toUpperCase();
 document.getElementById('userName').textContent   = user.username || 'User';
 document.getElementById('userRole').textContent   = user.role || 'staff';
@@ -236,81 +240,62 @@ document.getElementById('todayDate').textContent  =
         weekday:'long', year:'numeric', month:'long', day:'numeric'
     });
 
-// Show admin menu if admin
 if (user.role === 'admin') {
     document.getElementById('adminMenu').style.display = 'block';
 }
 
-// Role banner
 const banners = {
-    admin: {
-        bg: '#fff0f0', color: '#ff0000',
-        icon: '👑', text: 'Administrator — Full system access'
-    },
-    manager: {
-        bg: '#eaf4fb', color: '#2980b9',
-        icon: '📊', text: 'Manager — Reports, products and inventory access'
-    }
+    admin:   { bg:'#fff0f0', color:'#ff0000', icon:'👑', text:'Administrator — Full system access' },
+    manager: { bg:'#eaf4fb', color:'#2980b9', icon:'📊', text:'Manager — Reports, products and inventory access' }
 };
 const b = banners[user.role];
 if (b) {
     document.getElementById('roleBanner').style.background = b.bg;
     document.getElementById('roleBanner').innerHTML = `
         <span style="font-size:22px;">${b.icon}</span>
-        <span style="font-size:13.5px;font-weight:600;color:${b.color};">
-            ${b.text}
-        </span>`;
+        <span style="font-size:13.5px;font-weight:600;color:${b.color};">${b.text}</span>`;
 }
 
-// Quick actions based on role
 const allActions = [
-    { label: 'New Sale',    icon: '🧾', href: 'pos.html',        roles: ['admin','manager','cashier'] },
-    { label: 'Products',   icon: '📦', href: 'products.html',   roles: ['admin','manager'] },
-    { label: 'Inventory',  icon: '📊', href: 'inventory.html',  roles: ['admin','manager'] },
-    { label: 'Customers',  icon: '👥', href: 'customers.html',  roles: ['admin','manager'] },
-    { label: 'Reports',    icon: '📈', href: 'reports.html',    roles: ['admin','manager'] },
-    { label: 'Users',      icon: '🔐', href: 'users.html',      roles: ['admin'] },
+    { label:'New Sale',  icon:'🧾', href:'pos.html',       roles:['admin','manager','cashier'] },
+    { label:'Products',  icon:'📦', href:'products.html',  roles:['admin','manager'] },
+    { label:'Inventory', icon:'📊', href:'inventory.html', roles:['admin','manager'] },
+    { label:'Customers', icon:'👥', href:'customers.html', roles:['admin','manager'] },
+    { label:'Reports',   icon:'📈', href:'reports.html',   roles:['admin','manager'] },
+    { label:'Users',     icon:'🔐', href:'users.html',     roles:['admin'] },
 ];
 
-const actions = allActions.filter(a => a.roles.includes(user.role));
-document.getElementById('quickActions').innerHTML = actions.map(a => `
-    <a href="${a.href}" style="display:flex;flex-direction:column;align-items:center;
-        gap:8px;padding:16px;background:#f9f9f9;border-radius:10px;
-        text-decoration:none;transition:all 0.2s;border:1.5px solid #ebebeb;"
-        onmouseover="this.style.borderColor='#ff0000';this.style.background='#fff0f0'"
-        onmouseout="this.style.borderColor='#ebebeb';this.style.background='#f9f9f9'">
-        <span style="font-size:26px;">${a.icon}</span>
-        <span style="font-size:12px;font-weight:600;color:#333;">${a.label}</span>
-    </a>
-`).join('');
+document.getElementById('quickActions').innerHTML =
+    allActions.filter(a => a.roles.includes(user.role)).map(a => `
+        <a href="${a.href}" style="display:flex;flex-direction:column;align-items:center;
+            gap:8px;padding:16px;background:#f9f9f9;border-radius:10px;
+            text-decoration:none;transition:all 0.2s;border:1.5px solid #ebebeb;"
+            onmouseover="this.style.borderColor='#ff0000';this.style.background='#fff0f0'"
+            onmouseout="this.style.borderColor='#ebebeb';this.style.background='#f9f9f9'">
+            <span style="font-size:26px;">${a.icon}</span>
+            <span style="font-size:12px;font-weight:600;color:#333;">${a.label}</span>
+        </a>`
+    ).join('');
 
-// Load stats
 async function loadStats() {
     try {
-        // Today's sales
         const salesRes = await fetch(`${API}/reports/summary?days=1`, { headers: headers() });
         const sales    = await salesRes.json();
         document.getElementById('todayRevenue').textContent =
             `GHS ${parseFloat(sales.total_revenue || 0).toFixed(2)}`;
         document.getElementById('todaySales').textContent = sales.total_sales || 0;
 
-        // Low stock
         const prodRes  = await fetch(`${API}/products`, { headers: headers() });
         const products = await prodRes.json();
         document.getElementById('lowStockCount').textContent =
             products.filter(p => p.quantity <= 5).length;
 
-        // Customers
         const custRes   = await fetch(`${API}/customers`, { headers: headers() });
         const customers = await custRes.json();
         document.getElementById('totalCustomers').textContent = customers.length;
 
-        // Week chart
         loadWeekChart();
-
-        // Recent sales
         loadRecentSales();
-
     } catch (err) {
         console.log('Could not load stats:', err);
     }
@@ -320,7 +305,6 @@ async function loadWeekChart() {
     try {
         const res  = await fetch(`${API}/reports/daily?days=7`, { headers: headers() });
         const data = await res.json();
-
         new Chart(document.getElementById('weekChart'), {
             type: 'bar',
             data: {
@@ -329,9 +313,9 @@ async function loadWeekChart() {
                     label: 'Revenue (GHS)',
                     data:  data.map(d => parseFloat(d.revenue)),
                     backgroundColor: 'rgba(255,0,0,0.15)',
-                    borderColor:     '#ff0000',
-                    borderWidth:     2,
-                    borderRadius:    6
+                    borderColor: '#ff0000',
+                    borderWidth: 2,
+                    borderRadius: 6
                 }]
             },
             options: {
@@ -339,17 +323,13 @@ async function loadWeekChart() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { ticks: { color:'#888', font:{ size:10 } },
-                         grid: { display:false } },
-                    y: { ticks: { color:'#888', font:{ size:10 },
-                         callback: v => 'GHS ' + v },
+                    x: { ticks: { color:'#888', font:{ size:10 } }, grid: { display:false } },
+                    y: { ticks: { color:'#888', font:{ size:10 }, callback: v => 'GHS ' + v },
                          grid: { color:'rgba(0,0,0,0.05)' } }
                 }
             }
         });
-    } catch {
-        console.log('Could not load week chart.');
-    }
+    } catch { console.log('Could not load week chart.'); }
 }
 
 async function loadRecentSales() {
@@ -357,33 +337,23 @@ async function loadRecentSales() {
         const res  = await fetch(`${API}/sales`, { headers: headers() });
         const data = await res.json();
         const list = document.getElementById('recentSalesList');
-
         if (!data.length) {
-            list.innerHTML = `<p style="color:#aaa;text-align:center;padding:20px;">
-                No sales yet.</p>`;
+            list.innerHTML = `<p style="color:#aaa;text-align:center;padding:20px;">No sales yet.</p>`;
             return;
         }
-
         list.innerHTML = data.slice(0, 6).map(s => `
-            <div style="display:flex;justify-content:space-between;
-                align-items:center;padding:10px 0;
-                border-bottom:1px solid #f5f5f5;">
+            <div style="display:flex;justify-content:space-between;align-items:center;
+                padding:10px 0;border-bottom:1px solid #f5f5f5;">
                 <div>
-                    <div style="font-weight:600;font-size:13px;">
-                        ${s.username || 'Unknown'}
-                    </div>
-                    <div style="font-size:11px;color:#aaa;">
-                        ${new Date(s.date).toLocaleTimeString()}
-                    </div>
+                    <div style="font-weight:600;font-size:13px;">${s.username || 'Unknown'}</div>
+                    <div style="font-size:11px;color:#aaa;">${new Date(s.date).toLocaleTimeString()}</div>
                 </div>
                 <span style="font-weight:700;color:#ff0000;font-size:13px;">
                     GHS ${parseFloat(s.total_amount).toFixed(2)}
                 </span>
-            </div>
-        `).join('');
-    } catch {
-        console.log('Could not load recent sales.');
-    }
+            </div>`
+        ).join('');
+    } catch { console.log('Could not load recent sales.'); }
 }
 
 function logout() {
